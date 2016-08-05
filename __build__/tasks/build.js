@@ -36,7 +36,7 @@ gulp.task('create-meteor-output', function() {
   }
 });
 
-gulp.task('create-modules', ['clean-modules'], function() {
+gulp.task('create-packages', ['clean-packages'], function() {
   const modules = paths.modules;
   for (let moduleName in modules) {
     const module = modules[moduleName];
@@ -127,7 +127,7 @@ gulp.task('modify-package', function() {
 gulp.task('create-all', function(callback) {
   return runSequence(
     'create-meteor-output',
-    'create-modules',
+    'create-packages',
     'create-easy-webpack',
     'modify-package',
     callback
