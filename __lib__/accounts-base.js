@@ -41,20 +41,15 @@ var require = meteorInstall({"node_modules":{"meteor":{"accounts-base":{"client_
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                      //
-exports.__esModule = true;                                                                                           //
-exports.AccountsTest = exports.AccountsClient = undefined;                                                           //
-                                                                                                                     //
-var _accounts_client = require("./accounts_client.js");                                                              // 1
-                                                                                                                     //
-var _url_client = require("./url_client.js");                                                                        // 2
-                                                                                                                     //
-require("./localstorage_token.js");                                                                                  // 3
+module.export({AccountsClient:function(){return AccountsClient},AccountsTest:function(){return AccountsTest}});var AccountsClient;module.import("./accounts_client.js",{"AccountsClient":function(v){AccountsClient=v}});var AccountsTest;module.import("./url_client.js",{"AccountsTest":function(v){AccountsTest=v}});module.import("./localstorage_token.js");
+                                                                                                                     // 2
+                                                                                                                     // 3
                                                                                                                      //
 /**                                                                                                                  //
  * @namespace Accounts                                                                                               //
  * @summary The namespace for all client-side accounts-related methods.                                              //
  */                                                                                                                  //
-Accounts = new _accounts_client.AccountsClient();                                                                    // 9
+Accounts = new AccountsClient();                                                                                     // 9
                                                                                                                      //
 /**                                                                                                                  //
  * @summary A [Mongo.Collection](#collections) containing user documents.                                            //
@@ -64,16 +59,15 @@ Accounts = new _accounts_client.AccountsClient();                               
  */                                                                                                                  //
 Meteor.users = Accounts.users;                                                                                       // 17
                                                                                                                      //
-exports.                                                                                                             //
-// Since this file is the main module for the client version of the                                                  //
-// accounts-base package, properties of non-entry-point modules need to                                              //
-// be re-exported in order to be accessible to modules that import the                                               //
-// accounts-base package.                                                                                            //
-AccountsClient = _accounts_client.AccountsClient;                                                                    // 24
-exports.AccountsTest = _url_client.AccountsTest;                                                                     //
+                                                                                                                     // 19
+                                                                                                                     //
+                                                                                                                     //
+                                                                                                                     //
+                                                                                                                     //
+                                                                                                                     // 24
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}],"accounts_client.js":["babel-runtime/helpers/classCallCheck","babel-runtime/helpers/possibleConstructorReturn","babel-runtime/helpers/inherits","./accounts_common.js",function(require,exports){
+}],"accounts_client.js":["babel-runtime/helpers/classCallCheck","babel-runtime/helpers/possibleConstructorReturn","babel-runtime/helpers/inherits","./accounts_common.js",function(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //
@@ -81,24 +75,10 @@ exports.AccountsTest = _url_client.AccountsTest;                                
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                      //
-exports.__esModule = true;                                                                                           //
-exports.AccountsClient = undefined;                                                                                  //
+module.export({AccountsClient:function(){return AccountsClient}});var _classCallCheck;module.import("babel-runtime/helpers/classCallCheck",{"default":function(v){_classCallCheck=v}});var _possibleConstructorReturn;module.import("babel-runtime/helpers/possibleConstructorReturn",{"default":function(v){_possibleConstructorReturn=v}});var _inherits;module.import("babel-runtime/helpers/inherits",{"default":function(v){_inherits=v}});var AccountsCommon;module.import("./accounts_common.js",{"AccountsCommon":function(v){AccountsCommon=v}});
                                                                                                                      //
-var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");                                              //
                                                                                                                      //
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);                                                     //
-                                                                                                                     //
-var _possibleConstructorReturn2 = require("babel-runtime/helpers/possibleConstructorReturn");                        //
-                                                                                                                     //
-var _possibleConstructorReturn3 = _interopRequireDefault(_possibleConstructorReturn2);                               //
-                                                                                                                     //
-var _inherits2 = require("babel-runtime/helpers/inherits");                                                          //
-                                                                                                                     //
-var _inherits3 = _interopRequireDefault(_inherits2);                                                                 //
-                                                                                                                     //
-var _accounts_common = require("./accounts_common.js");                                                              // 1
-                                                                                                                     //
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }                    //
+                                                                                                                     // 1
                                                                                                                      //
 /**                                                                                                                  //
  * @summary Constructor for the `Accounts` object on the client.                                                     //
@@ -110,14 +90,13 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
  * @param {Object} options.connection Optional DDP connection to reuse.                                              //
  * @param {String} options.ddpUrl Optional URL for creating a new DDP connection.                                    //
  */                                                                                                                  //
-                                                                                                                     //
-var AccountsClient = exports.AccountsClient = function (_AccountsCommon) {                                           //
-  (0, _inherits3["default"])(AccountsClient, _AccountsCommon);                                                       //
+var AccountsClient = function (_AccountsCommon) {                                                                    // 13
+  _inherits(AccountsClient, _AccountsCommon);                                                                        // 13
                                                                                                                      //
   function AccountsClient(options) {                                                                                 // 14
-    (0, _classCallCheck3["default"])(this, AccountsClient);                                                          // 14
+    _classCallCheck(this, AccountsClient);                                                                           // 14
                                                                                                                      //
-    var _this = (0, _possibleConstructorReturn3["default"])(this, _AccountsCommon.call(this, options));              // 14
+    var _this = _possibleConstructorReturn(this, _AccountsCommon.call(this, options));                               // 14
                                                                                                                      //
     _this._loggingIn = false;                                                                                        // 17
     _this._loggingInDeps = new Tracker.Dependency();                                                                 // 18
@@ -142,29 +121,29 @@ var AccountsClient = exports.AccountsClient = function (_AccountsCommon) {      
   // @override                                                                                                       //
                                                                                                                      //
                                                                                                                      //
-  AccountsClient.prototype.userId = function () {                                                                    //
-    function userId() {                                                                                              //
+  AccountsClient.prototype.userId = function () {                                                                    // 13
+    function userId() {                                                                                              // 13
       return this.connection.userId();                                                                               // 39
     }                                                                                                                // 40
                                                                                                                      //
-    return userId;                                                                                                   //
-  }();                                                                                                               //
+    return userId;                                                                                                   // 13
+  }();                                                                                                               // 13
                                                                                                                      //
   // This is mostly just called within this file, but Meteor.loginWithPassword                                       //
   // also uses it to make loggingIn() be true during the beginPasswordExchange                                       //
   // method call too.                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsClient.prototype._setLoggingIn = function () {                                                             //
-    function _setLoggingIn(x) {                                                                                      //
+  AccountsClient.prototype._setLoggingIn = function () {                                                             // 13
+    function _setLoggingIn(x) {                                                                                      // 13
       if (this._loggingIn !== x) {                                                                                   // 46
         this._loggingIn = x;                                                                                         // 47
         this._loggingInDeps.changed();                                                                               // 48
       }                                                                                                              // 49
     }                                                                                                                // 50
                                                                                                                      //
-    return _setLoggingIn;                                                                                            //
-  }();                                                                                                               //
+    return _setLoggingIn;                                                                                            // 13
+  }();                                                                                                               // 13
                                                                                                                      //
   /**                                                                                                                //
    * @summary True if a login method (such as `Meteor.loginWithPassword`, `Meteor.loginWithFacebook`, or `Accounts.createUser`) is currently in progress. A reactive data source.
@@ -172,14 +151,14 @@ var AccountsClient = exports.AccountsClient = function (_AccountsCommon) {      
    */                                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsClient.prototype.loggingIn = function () {                                                                 //
-    function loggingIn() {                                                                                           //
+  AccountsClient.prototype.loggingIn = function () {                                                                 // 13
+    function loggingIn() {                                                                                           // 13
       this._loggingInDeps.depend();                                                                                  // 57
       return this._loggingIn;                                                                                        // 58
     }                                                                                                                // 59
                                                                                                                      //
-    return loggingIn;                                                                                                //
-  }();                                                                                                               //
+    return loggingIn;                                                                                                // 13
+  }();                                                                                                               // 13
                                                                                                                      //
   /**                                                                                                                //
    * @summary Log the user out.                                                                                      //
@@ -188,8 +167,8 @@ var AccountsClient = exports.AccountsClient = function (_AccountsCommon) {      
    */                                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsClient.prototype.logout = function () {                                                                    //
-    function logout(callback) {                                                                                      //
+  AccountsClient.prototype.logout = function () {                                                                    // 13
+    function logout(callback) {                                                                                      // 13
       var self = this;                                                                                               // 67
       self.connection.apply('logout', [], {                                                                          // 68
         wait: true                                                                                                   // 69
@@ -203,8 +182,8 @@ var AccountsClient = exports.AccountsClient = function (_AccountsCommon) {      
       });                                                                                                            // 77
     }                                                                                                                // 78
                                                                                                                      //
-    return logout;                                                                                                   //
-  }();                                                                                                               //
+    return logout;                                                                                                   // 13
+  }();                                                                                                               // 13
                                                                                                                      //
   /**                                                                                                                //
    * @summary Log out other clients logged in as the current user, but does not log out the client that calls this function.
@@ -213,8 +192,8 @@ var AccountsClient = exports.AccountsClient = function (_AccountsCommon) {      
    */                                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsClient.prototype.logoutOtherClients = function () {                                                        //
-    function logoutOtherClients(callback) {                                                                          //
+  AccountsClient.prototype.logoutOtherClients = function () {                                                        // 13
+    function logoutOtherClients(callback) {                                                                          // 13
       var self = this;                                                                                               // 86
                                                                                                                      //
       // We need to make two method calls: one to replace our current token,                                         //
@@ -244,13 +223,11 @@ var AccountsClient = exports.AccountsClient = function (_AccountsCommon) {      
       });                                                                                                            // 125
     }                                                                                                                // 127
                                                                                                                      //
-    return logoutOtherClients;                                                                                       //
-  }();                                                                                                               //
+    return logoutOtherClients;                                                                                       // 13
+  }();                                                                                                               // 13
                                                                                                                      //
-  return AccountsClient;                                                                                             //
-}(_accounts_common.AccountsCommon);                                                                                  //
-                                                                                                                     //
-;                                                                                                                    // 128
+  return AccountsClient;                                                                                             // 13
+}(AccountsCommon);;                                                                                                  // 13
                                                                                                                      //
 var Ap = AccountsClient.prototype;                                                                                   // 130
                                                                                                                      //
@@ -557,7 +534,7 @@ if (Package.blaze) {                                                            
 }                                                                                                                    // 441
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}],"accounts_common.js":["babel-runtime/helpers/classCallCheck",function(require,exports){
+}],"accounts_common.js":["babel-runtime/helpers/classCallCheck",function(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //
@@ -565,15 +542,7 @@ if (Package.blaze) {                                                            
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                      //
-exports.__esModule = true;                                                                                           //
-exports.AccountsCommon = undefined;                                                                                  //
-                                                                                                                     //
-var _classCallCheck2 = require("babel-runtime/helpers/classCallCheck");                                              //
-                                                                                                                     //
-var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);                                                     //
-                                                                                                                     //
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }                    //
-                                                                                                                     //
+module.export({AccountsCommon:function(){return AccountsCommon}});var _classCallCheck;module.import("babel-runtime/helpers/classCallCheck",{"default":function(v){_classCallCheck=v}});
 /**                                                                                                                  //
  * @summary Super-constructor for AccountsClient and AccountsServer.                                                 //
  * @locus Anywhere                                                                                                   //
@@ -583,10 +552,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
  * - connection {Object} Optional DDP connection to reuse.                                                           //
  * - ddpUrl {String} Optional URL for creating a new DDP connection.                                                 //
  */                                                                                                                  //
-                                                                                                                     //
-var AccountsCommon = exports.AccountsCommon = function () {                                                          //
+var AccountsCommon = function () {                                                                                   // 10
   function AccountsCommon(options) {                                                                                 // 11
-    (0, _classCallCheck3["default"])(this, AccountsCommon);                                                          // 11
+    _classCallCheck(this, AccountsCommon);                                                                           // 11
                                                                                                                      //
     // Currently this is read directly by packages like accounts-password                                            //
     // and accounts-ui-unstyled.                                                                                     //
@@ -627,13 +595,13 @@ var AccountsCommon = exports.AccountsCommon = function () {                     
    */                                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsCommon.prototype.userId = function () {                                                                    //
-    function userId() {                                                                                              //
+  AccountsCommon.prototype.userId = function () {                                                                    // 10
+    function userId() {                                                                                              // 10
       throw new Error("userId method not implemented");                                                              // 50
     }                                                                                                                // 51
                                                                                                                      //
-    return userId;                                                                                                   //
-  }();                                                                                                               //
+    return userId;                                                                                                   // 10
+  }();                                                                                                               // 10
                                                                                                                      //
   /**                                                                                                                //
    * @summary Get the current user record, or `null` if no user is logged in. A reactive data source.                //
@@ -641,14 +609,14 @@ var AccountsCommon = exports.AccountsCommon = function () {                     
    */                                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsCommon.prototype.user = function () {                                                                      //
-    function user() {                                                                                                //
+  AccountsCommon.prototype.user = function () {                                                                      // 10
+    function user() {                                                                                                // 10
       var userId = this.userId();                                                                                    // 58
       return userId ? this.users.findOne(userId) : null;                                                             // 59
     }                                                                                                                // 60
                                                                                                                      //
-    return user;                                                                                                     //
-  }();                                                                                                               //
+    return user;                                                                                                     // 10
+  }();                                                                                                               // 10
                                                                                                                      //
   // Set up config for the accounts system. Call this on both the client                                             //
   // and the server.                                                                                                 //
@@ -687,8 +655,8 @@ var AccountsCommon = exports.AccountsCommon = function () {                     
    */                                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsCommon.prototype.config = function () {                                                                    //
-    function config(options) {                                                                                       //
+  AccountsCommon.prototype.config = function () {                                                                    // 10
+    function config(options) {                                                                                       // 10
       var self = this;                                                                                               // 98
                                                                                                                      //
       // We don't want users to accidentally only call Accounts.config on the                                        //
@@ -733,8 +701,8 @@ var AccountsCommon = exports.AccountsCommon = function () {                     
       });                                                                                                            // 143
     }                                                                                                                // 144
                                                                                                                      //
-    return config;                                                                                                   //
-  }();                                                                                                               //
+    return config;                                                                                                   // 10
+  }();                                                                                                               // 10
                                                                                                                      //
   /**                                                                                                                //
    * @summary Register a callback to be called after a login attempt succeeds.                                       //
@@ -743,13 +711,13 @@ var AccountsCommon = exports.AccountsCommon = function () {                     
    */                                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsCommon.prototype.onLogin = function () {                                                                   //
-    function onLogin(func) {                                                                                         //
+  AccountsCommon.prototype.onLogin = function () {                                                                   // 10
+    function onLogin(func) {                                                                                         // 10
       return this._onLoginHook.register(func);                                                                       // 152
     }                                                                                                                // 153
                                                                                                                      //
-    return onLogin;                                                                                                  //
-  }();                                                                                                               //
+    return onLogin;                                                                                                  // 10
+  }();                                                                                                               // 10
                                                                                                                      //
   /**                                                                                                                //
    * @summary Register a callback to be called after a login attempt fails.                                          //
@@ -758,13 +726,13 @@ var AccountsCommon = exports.AccountsCommon = function () {                     
    */                                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsCommon.prototype.onLoginFailure = function () {                                                            //
-    function onLoginFailure(func) {                                                                                  //
+  AccountsCommon.prototype.onLoginFailure = function () {                                                            // 10
+    function onLoginFailure(func) {                                                                                  // 10
       return this._onLoginFailureHook.register(func);                                                                // 161
     }                                                                                                                // 162
                                                                                                                      //
-    return onLoginFailure;                                                                                           //
-  }();                                                                                                               //
+    return onLoginFailure;                                                                                           // 10
+  }();                                                                                                               // 10
                                                                                                                      //
   /**                                                                                                                //
    * @summary Register a callback to be called after a logout attempt succeeds.                                      //
@@ -773,16 +741,16 @@ var AccountsCommon = exports.AccountsCommon = function () {                     
    */                                                                                                                //
                                                                                                                      //
                                                                                                                      //
-  AccountsCommon.prototype.onLogout = function () {                                                                  //
-    function onLogout(func) {                                                                                        //
+  AccountsCommon.prototype.onLogout = function () {                                                                  // 10
+    function onLogout(func) {                                                                                        // 10
       return this._onLogoutHook.register(func);                                                                      // 170
     }                                                                                                                // 171
                                                                                                                      //
-    return onLogout;                                                                                                 //
-  }();                                                                                                               //
+    return onLogout;                                                                                                 // 10
+  }();                                                                                                               // 10
                                                                                                                      //
-  AccountsCommon.prototype._initConnection = function () {                                                           //
-    function _initConnection(options) {                                                                              //
+  AccountsCommon.prototype._initConnection = function () {                                                           // 10
+    function _initConnection(options) {                                                                              // 10
       if (!Meteor.isClient) {                                                                                        // 174
         return;                                                                                                      // 175
       }                                                                                                              // 176
@@ -813,40 +781,40 @@ var AccountsCommon = exports.AccountsCommon = function () {                     
       }                                                                                                              // 203
     }                                                                                                                // 204
                                                                                                                      //
-    return _initConnection;                                                                                          //
-  }();                                                                                                               //
+    return _initConnection;                                                                                          // 10
+  }();                                                                                                               // 10
                                                                                                                      //
-  AccountsCommon.prototype._getTokenLifetimeMs = function () {                                                       //
-    function _getTokenLifetimeMs() {                                                                                 //
+  AccountsCommon.prototype._getTokenLifetimeMs = function () {                                                       // 10
+    function _getTokenLifetimeMs() {                                                                                 // 10
       return (this._options.loginExpirationInDays || DEFAULT_LOGIN_EXPIRATION_DAYS) * 24 * 60 * 60 * 1000;           // 207
     }                                                                                                                // 209
                                                                                                                      //
-    return _getTokenLifetimeMs;                                                                                      //
-  }();                                                                                                               //
+    return _getTokenLifetimeMs;                                                                                      // 10
+  }();                                                                                                               // 10
                                                                                                                      //
-  AccountsCommon.prototype._tokenExpiration = function () {                                                          //
-    function _tokenExpiration(when) {                                                                                //
+  AccountsCommon.prototype._tokenExpiration = function () {                                                          // 10
+    function _tokenExpiration(when) {                                                                                // 10
       // We pass when through the Date constructor for backwards compatibility;                                      //
       // `when` used to be a number.                                                                                 //
       return new Date(new Date(when).getTime() + this._getTokenLifetimeMs());                                        // 214
     }                                                                                                                // 215
                                                                                                                      //
-    return _tokenExpiration;                                                                                         //
-  }();                                                                                                               //
+    return _tokenExpiration;                                                                                         // 10
+  }();                                                                                                               // 10
                                                                                                                      //
-  AccountsCommon.prototype._tokenExpiresSoon = function () {                                                         //
-    function _tokenExpiresSoon(when) {                                                                               //
+  AccountsCommon.prototype._tokenExpiresSoon = function () {                                                         // 10
+    function _tokenExpiresSoon(when) {                                                                               // 10
       var minLifetimeMs = .1 * this._getTokenLifetimeMs();                                                           // 218
       var minLifetimeCapMs = MIN_TOKEN_LIFETIME_CAP_SECS * 1000;                                                     // 219
       if (minLifetimeMs > minLifetimeCapMs) minLifetimeMs = minLifetimeCapMs;                                        // 220
       return new Date() > new Date(when) - minLifetimeMs;                                                            // 222
     }                                                                                                                // 223
                                                                                                                      //
-    return _tokenExpiresSoon;                                                                                        //
-  }();                                                                                                               //
+    return _tokenExpiresSoon;                                                                                        // 10
+  }();                                                                                                               // 10
                                                                                                                      //
-  return AccountsCommon;                                                                                             //
-}();                                                                                                                 //
+  return AccountsCommon;                                                                                             // 10
+}();                                                                                                                 // 10
                                                                                                                      //
 var Ap = AccountsCommon.prototype;                                                                                   // 226
                                                                                                                      //
@@ -904,7 +872,7 @@ Ap.LoginCancelledError.prototype.name = lceName;                                
 Ap.LoginCancelledError.numericError = 0x8acdc2f;                                                                     // 283
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}],"localstorage_token.js":["./accounts_client.js",function(require){
+}],"localstorage_token.js":["./accounts_client.js",function(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //
@@ -912,9 +880,8 @@ Ap.LoginCancelledError.numericError = 0x8acdc2f;                                
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                      //
-var _accounts_client = require("./accounts_client.js");                                                              // 1
-                                                                                                                     //
-var Ap = _accounts_client.AccountsClient.prototype;                                                                  // 2
+var AccountsClient;module.import("./accounts_client.js",{"AccountsClient":function(v){AccountsClient=v}});           // 1
+var Ap = AccountsClient.prototype;                                                                                   // 2
                                                                                                                      //
 // This file deals with storing a login token and user id in the                                                     //
 // browser's localStorage facility. It polls local storage every few                                                 //
@@ -1098,7 +1065,7 @@ Ap._pollStoredLoginToken = function () {                                        
 };                                                                                                                   // 185
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}],"url_client.js":["./accounts_client.js",function(require,exports){
+}],"url_client.js":["./accounts_client.js",function(require,exports,module){
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                   //
@@ -1106,12 +1073,9 @@ Ap._pollStoredLoginToken = function () {                                        
 //                                                                                                                   //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                      //
-exports.__esModule = true;                                                                                           //
-exports.AccountsTest = undefined;                                                                                    //
+module.export({AccountsTest:function(){return AccountsTest}});var AccountsClient;module.import("./accounts_client.js",{"AccountsClient":function(v){AccountsClient=v}});
                                                                                                                      //
-var _accounts_client = require("./accounts_client.js");                                                              // 1
-                                                                                                                     //
-var Ap = _accounts_client.AccountsClient.prototype;                                                                  // 3
+var Ap = AccountsClient.prototype;                                                                                   // 3
                                                                                                                      //
 // All of the special hash URLs we support for accounts interactions                                                 //
 var accountsPaths = ["reset-password", "verify-email", "enroll-account"];                                            // 6
@@ -1189,7 +1153,7 @@ function defaultSuccessHandler(token, urlPart) {                                
 }                                                                                                                    // 78
                                                                                                                      //
 // Export for testing                                                                                                //
-var AccountsTest = exports.AccountsTest = {                                                                          // 81
+var AccountsTest = {                                                                                                 // 81
   attemptToMatchHash: function () {                                                                                  // 82
     function attemptToMatchHash(hash, success) {                                                                     // 82
       return _attemptToMatchHash(Accounts, hash, success);                                                           // 83
