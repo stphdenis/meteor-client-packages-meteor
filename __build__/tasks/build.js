@@ -88,7 +88,7 @@ module.exports = function meteorClientModules() {
         alias: {
 `;
   for (let moduleName in paths.modules) {
-    easyWebpack += `          'meteor/${moduleName}': 'meteor-client-modules-meteor/${moduleName}',\n`;
+    easyWebpack += `          'meteor/${moduleName}': 'meteor-client-packages-meteor/${moduleName}',\n`;
   }
   easyWebpack += `        },
       },
