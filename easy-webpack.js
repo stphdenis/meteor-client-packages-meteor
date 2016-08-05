@@ -1,0 +1,53 @@
+'use strict';
+module.exports = function meteorClientModules() {
+  return function meteorClientModules() {
+    return {
+      resolve: {
+        alias: {
+          'meteor/underscore': 'meteor-client-modules-meteor/underscore',
+          'meteor/meteor': 'meteor-client-modules-meteor/meteor',
+          'meteor/modules-runtime': 'meteor-client-modules-meteor/modules-runtime',
+          'meteor/modules': 'meteor-client-modules-meteor/modules',
+          'meteor/base64': 'meteor-client-modules-meteor/base64',
+          'meteor/ejson': 'meteor-client-modules-meteor/ejson',
+          'meteor/check': 'meteor-client-modules-meteor/check',
+          'meteor/diff-sequence': 'meteor-client-modules-meteor/diff-sequence',
+          'meteor/tracker': 'meteor-client-modules-meteor/tracker',
+          'meteor/promise': 'meteor-client-modules-meteor/promise',
+          'meteor/ecmascript-runtime': 'meteor-client-modules-meteor/ecmascript-runtime',
+          'meteor/babel-runtime': 'meteor-client-modules-meteor/babel-runtime',
+          'meteor/random': 'meteor-client-modules-meteor/random',
+          'meteor/id-map': 'meteor-client-modules-meteor/id-map',
+          'meteor/mongo-id': 'meteor-client-modules-meteor/mongo-id',
+          'meteor/jquery': 'meteor-client-modules-meteor/jquery',
+          'meteor/reactive-var': 'meteor-client-modules-meteor/reactive-var',
+          'meteor/reactive-dict': 'meteor-client-modules-meteor/reactive-dict',
+          'meteor/observe-sequence': 'meteor-client-modules-meteor/observe-sequence',
+          'meteor/htmljs': 'meteor-client-modules-meteor/htmljs',
+          'meteor/blaze': 'meteor-client-modules-meteor/blaze',
+          'meteor/retry': 'meteor-client-modules-meteor/retry',
+          'meteor/ddp-common': 'meteor-client-modules-meteor/ddp-common',
+          'meteor/ddp-client': 'meteor-client-modules-meteor/ddp-client',
+          'meteor/ddp': 'meteor-client-modules-meteor/ddp',
+          'meteor/geojson-utils': 'meteor-client-modules-meteor/geojson-utils',
+          'meteor/ordered-dict': 'meteor-client-modules-meteor/ordered-dict',
+          'meteor/minimongo': 'meteor-client-modules-meteor/minimongo',
+          'meteor/allow-deny': 'meteor-client-modules-meteor/allow-deny',
+          'meteor/mongo': 'meteor-client-modules-meteor/mongo',
+          'meteor/callback-hook': 'meteor-client-modules-meteor/callback-hook',
+          'meteor/accounts-base': 'meteor-client-modules-meteor/accounts-base',
+          'meteor/sha': 'meteor-client-modules-meteor/sha',
+          'meteor/srp': 'meteor-client-modules-meteor/srp',
+          'meteor/accounts-password': 'meteor-client-modules-meteor/accounts-password',
+          'meteor/spacebars': 'meteor-client-modules-meteor/spacebars',
+          'meteor/session': 'meteor-client-modules-meteor/session',
+          'meteor/templating': 'meteor-client-modules-meteor/templating',
+          'meteor/service-configuration': 'meteor-client-modules-meteor/service-configuration',
+          'meteor/accounts-ui-unstyled': 'meteor-client-modules-meteor/accounts-ui-unstyled',
+          'meteor/accounts-ui': 'meteor-client-modules-meteor/accounts-ui',
+          'meteor/deps': 'meteor-client-modules-meteor/deps',
+        },
+      },
+    };
+  };
+};
