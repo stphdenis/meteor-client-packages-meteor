@@ -12,7 +12,7 @@ gulp.task('clean-meteor-output', function() {
   fs.removeSync('./__output__');
 });
 
-gulp.task('clean-modules', function() {
+gulp.task('clean-packages', function() {
   let files = fs.readdirSync('.');
   files.forEach(function(file) {
     const filePath = './' + file;
@@ -31,7 +31,7 @@ gulp.task('clean-all', function(callback) {
   return runSequence(
     'clean-meteor-project',
     'clean-meteor-output',
-    'clean-modules',
+    'clean-packages',
     callback
   );
 });
