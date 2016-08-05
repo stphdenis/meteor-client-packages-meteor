@@ -1,6 +1,6 @@
 {
   "name": "meteor-client-packages-meteor",
-  "version": "1.4.0-1.0.1",
+  "version": "1.3.5-0.0.2",
   "description": "Use Meteor's client Packages in a non Meteor project",
   "scripts": {
     "start": "npm run build",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/stphdenis/meteor-client-modules-meteor.git"
+    "url": "git+https://github.com/stphdenis/meteor-client-packages-meteor.git"
   },
   "keywords": [
     "meteor",
@@ -24,9 +24,9 @@
   "author": "Stéphane Denis <stph.denis@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/stphdenis/meteor-client-modules-meteor/issues"
+    "url": "https://github.com/stphdenis/meteor-client-packages-meteor/issues"
   },
-  "homepage": "https://github.com/stphdenis/meteor-client-modules-meteor#readme",
+  "homepage": "https://github.com/stphdenis/meteor-client-packages-meteor#readme",
   "devDependencies": {
     "fs-extra": "^0.30.0",
     "gulp": "^3.9.1",

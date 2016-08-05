@@ -15,13 +15,13 @@ and all the individual depedencies.
 ### Installation
 
 #### NPM
-`npm install --save meteor-client-packages-meteor@1.3.5-0.0.1` for Meteor 1.3.5
+`npm install --save meteor-client-packages-meteor@1.3.5-0.0.2` for Meteor 1.3.5
 
-`npm install --save meteor-client-packages-meteor@1.3.5-1.0.1` for Meteor 1.3.5.1
+`npm install --save meteor-client-packages-meteor@1.3.5-1.0.2` for Meteor 1.3.5.1
 
-`npm install --save meteor-client-packages-meteor@1.4.0-0.0.1` for Meteor 1.4
+`npm install --save meteor-client-packages-meteor@1.4.0-0.0.2` for Meteor 1.4
 
-`npm install --save meteor-client-packages-meteor@1.4.0-1.0.1` for Meteor 1.4.0.1
+`npm install --save meteor-client-packages-meteor@1.4.0-1.0.2` for Meteor 1.4.0.1
 
 ### Usage
 
@@ -41,7 +41,7 @@ export const __meteor_runtime_config__ = {
 * Set DDP connection url with `DDP_DEFAULT_CONNECTION_URL`
 * Make Meteor objects global with `__global_scope__: true`.
 
-#### 2. Load the meteor-client-packages-meteor packages:
+#### 2. Load the meteor-client-packages-meteor packages :
 
    To use with webpack you have to add the following code at the end of your `webpack.config.js` file :
 ```javascript
@@ -51,7 +51,7 @@ config = generateConfig(
 );
 ```
 
-   It makes it possible to import the packages as in Meteor :
+   It makes it possible to import the packages as in Meteor 1.3+ :
 ```javascript
 import { Meteor } from 'meteor/meteor';
 import { DDP } from 'meteor/ddp';
