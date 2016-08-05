@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const meteorVersion = JSON.parse(fs.readFileSync('./__src__/meteor-version.json')).version;
-const meteorModules = JSON.parse(fs.readFileSync(`./__src__/meteor-modules-${meteorVersion}.json`));
+const meteorModules = JSON.parse(fs.readFileSync(`./__src__/meteor-packages-${meteorVersion}.json`));
 
 module.exports = {
   meteorVersion: meteorVersion,
