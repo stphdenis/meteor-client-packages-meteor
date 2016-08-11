@@ -47,7 +47,7 @@ export const __meteor_runtime_config__ = {
 ```js
 config = generateConfig(
   config,
-  require('meteor-client-packages-meteor/easy-webpack')()
+  require('meteor-client-packages/easy-webpack')()
 );
 ```
 
@@ -57,7 +57,7 @@ import { Meteor } from 'meteor/meteor';
 import { DDP } from 'meteor/ddp';
 ```
 
-`meteor-client-packages-meteor/easy-webpack` has tow optional parameters :
+`meteor-client-packages/easy-webpack` has tow optional parameters :
 - absoluteNodeModulesPath: (default to false) node_modules must have absolute path (usefull with symlink). It has not been tested without Aurelia.
 - rootDir: (default to current root dir) the base dir for node_modules if absoluteNodeModulesPath is true
 
@@ -73,21 +73,22 @@ meteor-client-packages-meteor version : 1.4.0-0.x.x  <==  Meteor version : 1.4
 meteor-client-packages-meteor version : 1.4.0-1.x.x  <==  Meteor version : 1.4.0.1
 ```
 
-#### 4. Your own Meteor package
-  You can use this NPM Package as a model. To change the packages to include you have to :
-  1. Change the file `__src__\packages` with your own Meteor packages name
-  2. Change the file `__src__\meteor-version` to compile to the good version of Meteor if this makes sense
+#### 4. Your own NPM package for other METEOR packages
+  You have to use this NPM Package as a model. To change the packages to include you have to :
+  1. Change the file `__src__\packages` witch has to include the Meteor packages name you need
+  2. Change the file `__src__\meteor-version` to compile to the good version of Meteor when this makes sense
   3. Change the file `__src__\meteor-packages-meteorVersion` to define dependencies and `package-version`
-  4. Do `npm run build`
-  5. To use it, include `easy-webpack.js` file in your `webpack.config.js` file and import what you need as `meteor/yourMeteorPackageName`
+  4. In `dependencies` of the `package.json` file, replace `meteor-client-packages` by `meteor-client-packages-meteor` 
+  5. Do `npm run build` or `npm start`
+  6. Don't forget `git add *`, `git commit -m "new version"`, `git push` and `npm publish`
 
-   Don't include a Meteor package already in this NPM package.
+   Don't include a Meteor package already in this NPM package in the file `__src__\meteor-packages-meteorVersion.json`.
 
-   To be consistent, your can create your NPM package with a name like `meteor-client-packages-...`.
+   Your have to create your NPM package with a name like `meteor-client-packages-...`.
 
-   An `easy-webpack.js` file is generated based on the Meteor packages name to define the aliases.
+   All the `meteor-client-packages-...` NPM packages are loaded by webpack to define the aliases of the Meteor packages.
 
 ### What I've done
 The code is in the native compiled version of Meteor for a given version.
 
-I wanted to be able to use meteor's modules with webpack.
+I wanted to be able to use meteor's modules with webpack using `import {...} from 'meteor/...'`.
