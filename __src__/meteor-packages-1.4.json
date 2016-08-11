@@ -1,6 +1,6 @@
 {
   "meteor-version": "1.4",
-  "package-version": "1.4.0-0.0.3",
+  "package-version": "1.4.0-0.0.4",
   "modules": {
     "underscore": {
       "options": {"global-scope": []},

@@ -15,13 +15,13 @@ and all the individual depedencies.
 ### Installation
 
 #### NPM
-`npm install --save meteor-client-packages-meteor@1.3.5-0.0.3` for Meteor 1.3.5
+`npm install --save meteor-client-packages-meteor@1.3.5-0.0.4` for Meteor 1.3.5
 
-`npm install --save meteor-client-packages-meteor@1.3.5-1.0.3` for Meteor 1.3.5.1
+`npm install --save meteor-client-packages-meteor@1.3.5-1.0.4` for Meteor 1.3.5.1
 
-`npm install --save meteor-client-packages-meteor@1.4.0-0.0.3` for Meteor 1.4
+`npm install --save meteor-client-packages-meteor@1.4.0-0.0.4` for Meteor 1.4
 
-`npm install --save meteor-client-packages-meteor@1.4.0-1.0.3` for Meteor 1.4.0.1
+`npm install --save meteor-client-packages-meteor@1.4.0-1.0.4` for Meteor 1.4.0.1
 
 ### Usage
 
