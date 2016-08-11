@@ -1,1 +1,1 @@
-require('require-dir')('__build__/tasks');
+require('require-dir')('node_modules/meteor-client-packages/build/tasks');

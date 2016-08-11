@@ -415,7 +415,7 @@ _.extend(Mongo.Collection.prototype, {                                          
   }(),                                                                                                                // 309
                                                                                                                       //
   /**                                                                                                                 //
-   * @summary Finds the first document that matches the selector, as ordered by sort and skip options. Returns `undefined` if no matching document is found.
+   * @summary Finds the first document that matches the selector, as ordered by sort and skip options.                //
    * @locus Anywhere                                                                                                  //
    * @method findOne                                                                                                  //
    * @memberOf Mongo.Collection                                                                                       //
@@ -652,7 +652,7 @@ Mongo.Collection.prototype.insert = function () {                               
 }();                                                                                                                  // 467
                                                                                                                       //
 /**                                                                                                                   //
- * @summary Modify one or more documents in the collection. Returns the number of matched documents.                  //
+ * @summary Modify one or more documents in the collection. Returns the number of affected documents.                 //
  * @locus Anywhere                                                                                                    //
  * @method update                                                                                                     //
  * @memberOf Mongo.Collection                                                                                         //

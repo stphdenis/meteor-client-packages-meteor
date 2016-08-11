@@ -15,13 +15,13 @@ and all the individual depedencies.
 ### Installation
 
 #### NPM
-`npm install --save meteor-client-packages-meteor@1.3.5-0.0.2` for Meteor 1.3.5
+`npm install --save meteor-client-packages-meteor@1.3.5-0.0.3` for Meteor 1.3.5
 
-`npm install --save meteor-client-packages-meteor@1.3.5-1.0.2` for Meteor 1.3.5.1
+`npm install --save meteor-client-packages-meteor@1.3.5-1.0.3` for Meteor 1.3.5.1
 
-`npm install --save meteor-client-packages-meteor@1.4.0-0.0.2` for Meteor 1.4
+`npm install --save meteor-client-packages-meteor@1.4.0-0.0.3` for Meteor 1.4
 
-`npm install --save meteor-client-packages-meteor@1.4.0-1.0.2` for Meteor 1.4.0.1
+`npm install --save meteor-client-packages-meteor@1.4.0-1.0.3` for Meteor 1.4.0.1
 
 ### Usage
 
@@ -29,7 +29,7 @@ and all the individual depedencies.
 
 To define `__meteor_runtime_config__` global variables you can make a `meteor-runtime-config.js` file in your root.
 The following is the default if empty :
-```javascript
+```js
 export const __meteor_runtime_config__ = {
   meteorEnv: {},
   DDP_DEFAULT_CONNECTION_URL: 'http://localhost:3000',
@@ -44,7 +44,7 @@ export const __meteor_runtime_config__ = {
 #### 2. Load the meteor-client-packages-meteor packages :
 
    To use with webpack you have to add the following code at the end of your `webpack.config.js` file :
-```javascript
+```js
 config = generateConfig(
   config,
   require('meteor-client-packages-meteor/easy-webpack')()
@@ -52,10 +52,14 @@ config = generateConfig(
 ```
 
    It makes it possible to import the packages as in Meteor 1.3+ :
-```javascript
+```js
 import { Meteor } from 'meteor/meteor';
 import { DDP } from 'meteor/ddp';
 ```
+
+`meteor-client-packages-meteor/easy-webpack` has tow optional parameters :
+- absoluteNodeModulesPath: (default to false) node_modules must have absolute path (usefull with symlink). It has not been tested without Aurelia.
+- rootDir: (default to current root dir) the base dir for node_modules if absoluteNodeModulesPath is true
 
 The packages bundled by webpack are only those imported by your code with their dependencies.
 
