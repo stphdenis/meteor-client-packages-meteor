@@ -1,11 +1,8 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
-require( 'meteor/modules');
-require( 'meteor/ejson');
-require( 'meteor/reactive-dict');
-require( '../__lib__/session');
-var pkg = Package['session'];
+require( 'meteor/random');
+require( '../__lib__/localstorage');
+var pkg = Package['localstorage'];
 for(var key in pkg) {
   exports[key] = pkg[key];
 }

@@ -1,4 +1,5 @@
 'use strict';
+require( 'meteor/localstorage');
 require( 'meteor/underscore');
 require( 'meteor/meteor');
 require( 'meteor/modules');

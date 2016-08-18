@@ -1,6 +1,6 @@
 {
   "name": "meteor-client-packages-meteor",
-  "version": "1.3.5-0.0.4",
+  "version": "1.4.0-1.0.5",
   "description": "Use Meteor's client Packages in a non Meteor project",
   "scripts": {
     "start": "npm run build",
@@ -29,7 +29,7 @@
   },
   "homepage": "https://github.com/stphdenis/meteor-client-packages-meteor#readme",
   "dependencies": {
-    "meteor-client-packages": "^0.0.4"
+    "meteor-client-packages": "^0.0.5"
   },
   "devDependencies": {
     "fs-extra": "^0.30.0",

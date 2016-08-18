@@ -1,174 +1,59 @@
 {
   "meteor-version": "1.4",
-  "package-version": "1.4.0-0.0.4",
+  "package-version": "1.4.0-0.0.5",
   "modules": {
-    "underscore": {
-      "options": {"global-scope": []},
-      "dependencies": []
-    },
-    "meteor": {
-      "options": {"global-scope": ["Meteor"]},
-      "dependencies": ["underscore"]
-    },
-    "modules-runtime": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor"]
-    },
-    "modules": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "modules-runtime"]
-    },
-    "base64": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor"]
-    },
-    "ejson": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "base64"]
-    },
-    "check": {
-      "options": {"global-scope": ["check", "Match"]},
-      "dependencies": ["underscore", "meteor", "modules", "ejson"]
-    },
-    "diff-sequence": {
-      "options": {"global-scope": ["DiffSequence"]},
-      "dependencies": ["underscore", "meteor", "ejson"]
-    },
-    "tracker": {
-      "options": {"global-scope": ["Tracker"]},
-      "dependencies": ["meteor"]
-    },
-    "promise": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor", "modules"]
-    },
-    "ecmascript-runtime": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor", "modules", "promise"]
-    },
-    "babel-runtime": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor", "modules", "promise"]
-    },
-    "random": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "modules", "promise", "ecmascript-runtime", "babel-runtime"]
-    },
-    "id-map": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "ejson"]
-    },
-    "mongo-id": {
-      "options": {"global-scope": ["MongoID"]},
-      "dependencies": ["meteor", "ejson", "random", "id-map"]
-    },
-    "jquery": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor", "modules"]
-    },
-    "reactive-var": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor", "tracker"]
-    },
-    "reactive-dict": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "modules", "ejson", "tracker", "promise", "ecmascript-runtime", "babel-runtime"]
-    },
-    "observe-sequence": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "diff-sequence", "tracker", "random", "mongo-id"]
-    },
-    "htmljs": {
-      "options": {"global-scope": ["HTML"]},
-      "dependencies": ["underscore", "meteor", "tracker"]
-    },
-    "blaze": {
-      "options": {"global-scope": ["Blaze", "UI", "Handlebars"]},
-      "dependencies": ["meteor", "modules", "check", "tracker", "jquery", "reactive-var", "observe-sequence", "htmljs"]
-    },
-    "retry": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "random"]
-    },
-    "ddp-common": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "ejson", "check", "tracker", "random", "retry"]
-    },
-    "ddp-client": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "ejson", "check", "diff-sequence", "tracker", "random", "id-map", "mongo-id", "retry", "ddp-common"]
-    },
-    "ddp": {
-      "options": {"global-scope": ["DDP"]},
-      "dependencies": ["ddp-client"]
-      },
-    "geojson-utils": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor", "modules"]
-    },
-    "ordered-dict": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor"]
-    },  
-    "minimongo": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "ejson", "diff-sequence", "tracker", "random", "id-map", "mongo-id", "geojson-utils", "ordered-dict"]
-    },
-    "allow-deny": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "modules", "ejson", "check", "promise", "ecmascript-runtime", "babel-runtime", "ddp-client", "minimongo"]
-    },
-    "mongo": {
-      "options": {"global-scope": ["Mongo"]},
-      "dependencies": ["underscore", "meteor", "modules", "ejson", "check", "diff-sequence", "tracker", "promise", "ecmascript-runtime", "babel-runtime", "random", "mongo-id", "ddp-client", "minimongo", "allow-deny"]
-    },
-    "callback-hook": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor"]
-    },
-    "accounts-base": {
-      "options": {"global-scope": ["Accounts"]},
-      "dependencies": ["underscore", "meteor", "modules", "tracker", "promise", "ecmascript-runtime", "babel-runtime", "random", "ddp-client", "mongo", "callback-hook"]
-      },
-    "sha": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor"]
-    },
-    "srp": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "check", "random", "sha"]
-    },
-    "accounts-password": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "modules", "ejson", "check", "promise", "ecmascript-runtime", "babel-runtime", "ddp-client", "accounts-base", "sha", "srp"]
-    },
-    "spacebars": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "tracker", "observe-sequence", "htmljs", "blaze"]
-    },
-    "session": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "modules", "ejson", "reactive-var"]
-    },
-    "templating": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "modules", "htmljs", "blaze", "spacebars"]
-    },
-    "service-configuration": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor", "mongo", "accounts-base"]
-    },
-    "accounts-ui-unstyled": {
-      "options": {"global-scope": []},
-      "dependencies": ["underscore", "meteor", "tracker", "jquery", "htmljs", "blaze", "accounts-base", "spacebars", "session", "templating", "service-configuration"]
-    },
-    "accounts-ui": {
-      "options": {"global-scope": []},
-      "dependencies": ["meteor", "accounts-base", "accounts-ui-unstyled"]
-    },
-    "deps": {
-      "options": {"global-scope": ["Deps"]},
-      "dependencies": []
-    }
+    "underscore"            : {},
+    "meteor"                : { "dependencies": ["underscore"],
+                                "global-scope": ["Meteor"]},
+    "modules-runtime"       : { "dependencies": ["meteor"]},
+    "modules"               : { "dependencies": ["underscore", "meteor", "modules-runtime"]},
+    "base64"                : { "dependencies": ["meteor"]},
+    "ejson"                 : { "dependencies": ["underscore", "meteor", "base64"]},
+    "check"                 : { "dependencies": ["underscore", "meteor", "modules", "ejson"],
+                                "global-scope": ["check", "Match"]},
+    "diff-sequence"         : { "dependencies": ["underscore", "meteor", "ejson"],
+                                "global-scope": ["DiffSequence"]},
+    "tracker"               : { "dependencies": ["meteor"],
+                                "global-scope": ["Tracker"]},
+    "promise"               : { "dependencies": ["meteor", "modules"]},
+    "ecmascript-runtime"    : { "dependencies": ["meteor", "modules", "promise"]},
+    "babel-runtime"         : { "dependencies": ["meteor", "modules", "promise"]},
+    "random"                : { "dependencies": ["underscore", "meteor", "modules", "promise", "ecmascript-runtime", "babel-runtime"]},
+    "id-map"                : { "dependencies": ["underscore", "meteor", "ejson"]},
+    "mongo-id"              : { "dependencies": ["meteor", "ejson", "random", "id-map"],
+                                "global-scope": ["MongoID"]},
+    "jquery"                : { "dependencies": ["meteor", "modules"]},
+    "reactive-var"          : { "dependencies": ["meteor", "tracker"]},
+    "reactive-dict"         : { "dependencies": ["underscore", "meteor", "modules", "ejson", "tracker", "promise", "ecmascript-runtime", "babel-runtime"]},
+    "observe-sequence"      : { "dependencies": ["underscore", "meteor", "diff-sequence", "tracker", "random", "mongo-id"]},
+    "htmljs"                : { "dependencies": ["underscore", "meteor", "tracker"],
+                                "global-scope": ["HTML"]},
+    "blaze"                 : { "dependencies": ["meteor", "modules", "check", "tracker", "jquery", "reactive-var", "observe-sequence", "htmljs"],
+                                "global-scope": ["Blaze", "UI", "Handlebars"]},
+    "retry"                 : { "dependencies": ["underscore", "meteor", "random"]},
+    "ddp-common"            : { "dependencies": ["underscore", "meteor", "ejson", "check", "tracker", "random", "retry"]},
+    "ddp-client"            : { "dependencies": ["underscore", "meteor", "ejson", "check", "diff-sequence", "tracker", "random", "id-map", "mongo-id", "retry", "ddp-common"]},
+    "ddp"                   : { "dependencies": ["ddp-client"],
+                                "global-scope": ["DDP"]},
+    "geojson-utils"         : { "dependencies": ["meteor", "modules"]},
+    "ordered-dict"          : { "dependencies": ["underscore", "meteor"]},
+    "minimongo"             : { "dependencies": ["underscore", "meteor", "ejson", "diff-sequence", "tracker", "random", "id-map", "mongo-id", "geojson-utils", "ordered-dict"]},
+    "allow-deny"            : { "dependencies": ["underscore", "meteor", "modules", "ejson", "check", "promise", "ecmascript-runtime", "babel-runtime", "ddp-client", "minimongo"]},
+    "mongo"                 : { "dependencies": ["underscore", "meteor", "modules", "ejson", "check", "diff-sequence", "tracker", "promise", "ecmascript-runtime", "babel-runtime", "random", "mongo-id", "ddp-client", "minimongo", "allow-deny"],
+                                "global-scope": ["Mongo"]},
+    "callback-hook"         : { "dependencies": ["underscore", "meteor"]},
+    "localstorage"          : { "dependencies": ["meteor", "random"]},
+    "accounts-base"         : { "dependencies": ["localstorage", "underscore", "meteor", "modules", "tracker", "promise", "ecmascript-runtime", "babel-runtime", "random", "ddp-client", "mongo", "callback-hook"],
+                                "global-scope": ["Accounts"]},
+    "service-configuration" : { "dependencies": ["meteor", "mongo", "accounts-base"]},
+    "sha"                   : { "dependencies": ["meteor"]},
+    "srp"                   : { "dependencies": ["underscore", "meteor", "check", "random", "sha"]},
+    "accounts-password"     : { "dependencies": ["underscore", "meteor", "modules", "ejson", "check", "promise", "ecmascript-runtime", "babel-runtime", "ddp-client", "accounts-base", "sha", "srp"]},
+    "spacebars"             : { "dependencies": ["underscore", "meteor", "tracker", "observe-sequence", "htmljs", "blaze"]},
+    "session"               : { "dependencies": ["underscore", "meteor", "modules", "ejson", "reactive-dict"]},
+    "templating"            : { "dependencies": ["underscore", "meteor", "modules", "htmljs", "blaze", "spacebars"]},
+    "accounts-ui-unstyled"  : { "dependencies": ["underscore", "meteor", "tracker", "jquery", "htmljs", "blaze", "service-configuration", "accounts-base", "spacebars", "session", "templating"]},
+    "accounts-ui"           : { "dependencies": ["meteor", "accounts-base", "accounts-ui-unstyled"]},
+    "deps"                  : { "global-scope": ["Deps"]}
   }
 }
