@@ -1,6 +1,6 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
+require( 'meteor/underscore');
 require( 'meteor/ejson');
 require( '../__lib__/diff-sequence');
 var pkg = Package['diff-sequence'];

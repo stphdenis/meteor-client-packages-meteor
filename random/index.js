@@ -1,10 +1,10 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
+require( 'meteor/underscore');
 require( 'meteor/modules');
-require( 'meteor/promise');
 require( 'meteor/ecmascript-runtime');
 require( 'meteor/babel-runtime');
+require( 'meteor/promise');
 require( '../__lib__/random');
 var pkg = Package['random'];
 for(var key in pkg) {

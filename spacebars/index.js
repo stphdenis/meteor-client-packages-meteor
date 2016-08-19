@@ -1,10 +1,10 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
-require( 'meteor/tracker');
-require( 'meteor/observe-sequence');
 require( 'meteor/htmljs');
+require( 'meteor/tracker');
 require( 'meteor/blaze');
+require( 'meteor/observe-sequence');
+require( 'meteor/underscore');
 require( '../__lib__/spacebars');
 var pkg = Package['spacebars'];
 for(var key in pkg) {

@@ -1,6 +1,6 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
+require( 'meteor/underscore');
 require( 'meteor/ejson');
 require( '../__lib__/id-map');
 var pkg = Package['id-map'];

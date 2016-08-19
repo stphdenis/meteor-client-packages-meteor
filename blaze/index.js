@@ -1,12 +1,12 @@
 'use strict';
 require( 'meteor/meteor');
-require( 'meteor/modules');
-require( 'meteor/check');
-require( 'meteor/tracker');
 require( 'meteor/jquery');
-require( 'meteor/reactive-var');
-require( 'meteor/observe-sequence');
+require( 'meteor/tracker');
+require( 'meteor/check');
+require( 'meteor/underscore');
 require( 'meteor/htmljs');
+require( 'meteor/observe-sequence');
+require( 'meteor/reactive-var');
 require( '../__lib__/blaze');
 var pkg = Package['blaze'];
 for(var key in pkg) {

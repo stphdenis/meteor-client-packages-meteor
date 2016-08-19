@@ -1,9 +1,9 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
-require( 'meteor/check');
 require( 'meteor/random');
+require( 'meteor/check');
 require( 'meteor/sha');
+require( 'meteor/underscore');
 require( '../__lib__/srp');
 var pkg = Package['srp'];
 for(var key in pkg) {

@@ -1,6 +1,6 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
+require( 'meteor/underscore');
 require( 'meteor/random');
 require( '../__lib__/retry');
 var pkg = Package['retry'];

@@ -1,4 +1,5 @@
 'use strict';
+require( 'meteor/meteor');
 require( 'meteor/ddp-client');
 require( '../__lib__/ddp');
 var pkg = Package['ddp'];

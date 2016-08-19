@@ -1,15 +1,15 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
 require( 'meteor/tracker');
-require( 'meteor/jquery');
-require( 'meteor/htmljs');
-require( 'meteor/blaze');
 require( 'meteor/service-configuration');
 require( 'meteor/accounts-base');
-require( 'meteor/spacebars');
-require( 'meteor/session');
+require( 'meteor/underscore');
 require( 'meteor/templating');
+require( 'meteor/session');
+require( 'meteor/jquery');
+require( 'meteor/blaze');
+require( 'meteor/spacebars');
+require( 'meteor/htmljs');
 require( '../__lib__/accounts-ui-unstyled');
 var pkg = Package['accounts-ui-unstyled'];
 for(var key in pkg) {

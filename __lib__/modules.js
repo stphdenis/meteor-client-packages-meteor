@@ -160,19 +160,18 @@ install("ddp-rate-limiter");                                                 // 
 install("localstorage");                                                     // 66
 install("callback-hook");                                                    // 67
 install("accounts-base", "meteor/accounts-base/client_main.js");             // 68
-install("npm-bcrypt");                                                       // 69
-install("sha");                                                              // 70
-install("srp");                                                              // 71
-install("accounts-password");                                                // 72
-install("service-configuration");                                            // 73
-install("spacebars");                                                        // 74
-install("templating");                                                       // 75
-install("reactive-dict");                                                    // 76
-install("session");                                                          // 77
-install("less");                                                             // 78
-install("accounts-ui-unstyled");                                             // 79
-install("accounts-ui");                                                      // 80
-                                                                             // 81
+install("sha");                                                              // 69
+install("srp");                                                              // 70
+install("accounts-password");                                                // 71
+install("service-configuration");                                            // 72
+install("spacebars");                                                        // 73
+install("templating");                                                       // 74
+install("reactive-dict");                                                    // 75
+install("session");                                                          // 76
+install("less");                                                             // 77
+install("accounts-ui-unstyled");                                             // 78
+install("accounts-ui");                                                      // 79
+                                                                             // 80
 ///////////////////////////////////////////////////////////////////////////////
 
 },"process.js":["process",function(require,exports,module){

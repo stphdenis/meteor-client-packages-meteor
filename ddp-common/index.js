@@ -1,10 +1,10 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
-require( 'meteor/ejson');
 require( 'meteor/check');
-require( 'meteor/tracker');
 require( 'meteor/random');
+require( 'meteor/ejson');
+require( 'meteor/underscore');
+require( 'meteor/tracker');
 require( 'meteor/retry');
 require( '../__lib__/ddp-common');
 var pkg = Package['ddp-common'];

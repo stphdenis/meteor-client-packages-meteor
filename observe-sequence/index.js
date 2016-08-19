@@ -1,10 +1,10 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
-require( 'meteor/diff-sequence');
 require( 'meteor/tracker');
-require( 'meteor/random');
 require( 'meteor/mongo-id');
+require( 'meteor/diff-sequence');
+require( 'meteor/underscore');
+require( 'meteor/random');
 require( '../__lib__/observe-sequence');
 var pkg = Package['observe-sequence'];
 for(var key in pkg) {

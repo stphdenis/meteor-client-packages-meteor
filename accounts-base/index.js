@@ -1,16 +1,16 @@
 'use strict';
-require( 'meteor/localstorage');
-require( 'meteor/underscore');
 require( 'meteor/meteor');
-require( 'meteor/modules');
+require( 'meteor/underscore');
 require( 'meteor/tracker');
-require( 'meteor/promise');
-require( 'meteor/ecmascript-runtime');
-require( 'meteor/babel-runtime');
 require( 'meteor/random');
+require( 'meteor/callback-hook');
 require( 'meteor/ddp-client');
 require( 'meteor/mongo');
-require( 'meteor/callback-hook');
+require( 'meteor/modules');
+require( 'meteor/ecmascript-runtime');
+require( 'meteor/babel-runtime');
+require( 'meteor/promise');
+require( 'meteor/localstorage');
 require( '../__lib__/accounts-base');
 var pkg = Package['accounts-base'];
 for(var key in pkg) {

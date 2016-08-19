@@ -1,5 +1,4 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
 require( 'meteor/tracker');
 require( '../__lib__/htmljs');

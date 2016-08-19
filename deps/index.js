@@ -1,4 +1,6 @@
 'use strict';
+require( 'meteor/meteor');
+require( 'meteor/tracker');
 require( '../__lib__/deps');
 var pkg = Package['deps'];
 for(var key in pkg) {

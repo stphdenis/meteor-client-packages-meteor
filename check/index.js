@@ -1,7 +1,7 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
 require( 'meteor/modules');
+require( 'meteor/underscore');
 require( 'meteor/ejson');
 require( '../__lib__/check');
 var pkg = Package['check'];

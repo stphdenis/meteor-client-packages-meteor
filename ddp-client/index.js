@@ -1,15 +1,15 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
-require( 'meteor/ejson');
 require( 'meteor/check');
-require( 'meteor/diff-sequence');
-require( 'meteor/tracker');
 require( 'meteor/random');
-require( 'meteor/id-map');
-require( 'meteor/mongo-id');
+require( 'meteor/ejson');
+require( 'meteor/underscore');
+require( 'meteor/tracker');
 require( 'meteor/retry');
+require( 'meteor/id-map');
 require( 'meteor/ddp-common');
+require( 'meteor/diff-sequence');
+require( 'meteor/mongo-id');
 require( '../__lib__/ddp-client');
 var pkg = Package['ddp-client'];
 for(var key in pkg) {

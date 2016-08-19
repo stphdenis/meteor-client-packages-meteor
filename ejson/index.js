@@ -1,6 +1,6 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
+require( 'meteor/underscore');
 require( 'meteor/base64');
 require( '../__lib__/ejson');
 var pkg = Package['ejson'];

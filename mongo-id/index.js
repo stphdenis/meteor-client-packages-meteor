@@ -1,8 +1,8 @@
 'use strict';
 require( 'meteor/meteor');
 require( 'meteor/ejson');
-require( 'meteor/random');
 require( 'meteor/id-map');
+require( 'meteor/random');
 require( '../__lib__/mongo-id');
 var pkg = Package['mongo-id'];
 for(var key in pkg) {

@@ -1,6 +1,6 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
+require( 'meteor/underscore');
 require( 'meteor/modules-runtime');
 require( '../__lib__/modules');
 var pkg = Package['modules'];

@@ -1,7 +1,7 @@
 'use strict';
 require( 'meteor/meteor');
-require( 'meteor/mongo');
 require( 'meteor/accounts-base');
+require( 'meteor/mongo');
 require( '../__lib__/service-configuration');
 var pkg = Package['service-configuration'];
 for(var key in pkg) {

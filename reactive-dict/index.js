@@ -1,12 +1,12 @@
 'use strict';
-require( 'meteor/underscore');
 require( 'meteor/meteor');
-require( 'meteor/modules');
-require( 'meteor/ejson');
+require( 'meteor/underscore');
 require( 'meteor/tracker');
-require( 'meteor/promise');
+require( 'meteor/ejson');
+require( 'meteor/modules');
 require( 'meteor/ecmascript-runtime');
 require( 'meteor/babel-runtime');
+require( 'meteor/promise');
 require( '../__lib__/reactive-dict');
 var pkg = Package['reactive-dict'];
 for(var key in pkg) {
