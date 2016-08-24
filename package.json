@@ -1,6 +1,6 @@
 {
   "name": "meteor-client-packages-meteor",
-  "version": "1.4.1-0.0.5",
+  "version": "1.4.1-1.0.5",
   "description": "Use Meteor's client Packages in a non Meteor project",
   "scripts": {
     "start": "npm run build",
