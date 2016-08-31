@@ -1,12 +1,13 @@
 {
   "name": "meteor-client-packages-meteor",
-  "version": "1.4.1-1.0.5",
+  "version": "1.4.1-1.0.7",
   "description": "Use Meteor's client Packages in a non Meteor project",
   "scripts": {
     "start": "npm run build",
     "build": "gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "style": "__lib__/accounts-ui/login_buttons.less.css",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stphdenis/meteor-client-packages-meteor.git"
@@ -29,7 +30,7 @@
   },
   "homepage": "https://github.com/stphdenis/meteor-client-packages-meteor#readme",
   "dependencies": {
-    "meteor-client-packages": "^0.0.5"
+    "meteor-client-packages": "0.0.7"
   },
   "devDependencies": {
     "fs-extra": "^0.30.0",

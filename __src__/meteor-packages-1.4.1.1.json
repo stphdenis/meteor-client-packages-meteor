@@ -1,12 +1,13 @@
 {
   "meteor-version": "1.4.1.1",
-  "package-version": "1.4.1-1.0.5",
+  "package-version": "1.4.1-1.0.7",
   "modules": {
     "accounts-base"         : { "dependencies": ["meteor", "underscore", "tracker", "random", "callback-hook", "ddp-client", "mongo", "modules", "ecmascript-runtime", "babel-runtime", "promise", "localstorage"],
                                 "global-scope": ["Accounts"]},
     "accounts-password"     : { "dependencies": ["meteor", "accounts-base", "srp", "sha", "ejson", "ddp-client", "check", "underscore", "modules", "ecmascript-runtime", "babel-runtime", "promise"]},
     "accounts-ui-unstyled"  : { "dependencies": ["meteor", "tracker", "service-configuration", "accounts-base", "underscore", "templating", "session", "jquery", "blaze", "spacebars", "htmljs"]},
-    "accounts-ui"           : { "dependencies": ["meteor", "accounts-base", "accounts-ui-unstyled"]},
+    "accounts-ui"           : { "dependencies": ["meteor", "accounts-base", "accounts-ui-unstyled"],
+                                "styles": "login_buttons.less.css"},
     "allow-deny"            : { "dependencies": ["meteor", "underscore", "minimongo", "check", "ejson", "ddp-client", "modules", "ecmascript-runtime", "babel-runtime", "promise"]},
     "babel-runtime"         : { "dependencies": ["meteor", "modules", "promise"]},
     "base64"                : { "dependencies": ["meteor"]},

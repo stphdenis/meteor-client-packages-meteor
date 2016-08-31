@@ -15,15 +15,17 @@ and all the individual depedencies.
 ### Installation
 
 #### NPM
-`npm install --save meteor-client-packages-meteor@1.3.5-0.0.5` for Meteor 1.3.5
+`npm install --save meteor-client-packages-meteor@1.3.5-0.0.7` for Meteor 1.3.5
 
-`npm install --save meteor-client-packages-meteor@1.3.5-1.0.5` for Meteor 1.3.5.1
+`npm install --save meteor-client-packages-meteor@1.3.5-1.0.7` for Meteor 1.3.5.1
 
-`npm install --save meteor-client-packages-meteor@1.4.0-0.0.5` for Meteor 1.4
+`npm install --save meteor-client-packages-meteor@1.4.0-0.0.7` for Meteor 1.4
 
-`npm install --save meteor-client-packages-meteor@1.4.0-1.0.5` for Meteor 1.4.0.1
+`npm install --save meteor-client-packages-meteor@1.4.0-1.0.7` for Meteor 1.4.0.1
 
-`npm install --save meteor-client-packages-meteor@1.4.1-0.0.5` for Meteor 1.4.1
+`npm install --save meteor-client-packages-meteor@1.4.1-0.0.7` for Meteor 1.4.1
+
+`npm install --save meteor-client-packages-meteor@1.4.1-1.0.7` for Meteor 1.4.1.1
 
 ### Usage
 
@@ -53,6 +55,13 @@ config = generateConfig(
 );
 ```
 
+   `[name]` have to be in the filename of css files of shunks :
+```js
+require('@easy-webpack/config-css')
+  ({ filename: '[name].styles.css', allChunks: true, sourceMap: false }),
+
+```
+
    It makes it possible to import the packages as in Meteor 1.3+ :
 ```js
 import { Meteor } from 'meteor/meteor';
@@ -73,6 +82,8 @@ meteor-client-packages-meteor version : 1.3.5-0.x.x  <==  Meteor version : 1.3.5
 meteor-client-packages-meteor version : 1.3.5-1.x.x  <==  Meteor version : 1.3.5.1
 meteor-client-packages-meteor version : 1.4.0-0.x.x  <==  Meteor version : 1.4
 meteor-client-packages-meteor version : 1.4.0-1.x.x  <==  Meteor version : 1.4.0.1
+meteor-client-packages-meteor version : 1.4.1-0.x.x  <==  Meteor version : 1.4.1
+meteor-client-packages-meteor version : 1.4.1-1.x.x  <==  Meteor version : 1.4.1.1
 ```
 
 #### 4. Your own NPM package for other METEOR packages
