@@ -141,10 +141,10 @@ install("babel-runtime");                                                    // 
 install("random");                                                           // 47
 install("mongo-id");                                                         // 48
 install("jquery", "meteor/jquery/main.js");                                  // 49
-install("deps");                                                             // 50
-install("htmljs");                                                           // 51
-install("observe-sequence");                                                 // 52
-install("reactive-var");                                                     // 53
+install("observe-sequence");                                                 // 50
+install("reactive-var");                                                     // 51
+install("deps");                                                             // 52
+install("htmljs");                                                           // 53
 install("blaze");                                                            // 54
 install("retry");                                                            // 55
 install("ddp-common");                                                       // 56
@@ -165,13 +165,15 @@ install("srp");                                                              // 
 install("accounts-password");                                                // 71
 install("service-configuration");                                            // 72
 install("spacebars");                                                        // 73
-install("templating");                                                       // 74
-install("reactive-dict");                                                    // 75
-install("session");                                                          // 76
-install("less");                                                             // 77
-install("accounts-ui-unstyled");                                             // 78
-install("accounts-ui");                                                      // 79
-                                                                             // 80
+install("templating-compiler");                                              // 74
+install("templating-runtime");                                               // 75
+install("templating");                                                       // 76
+install("reactive-dict");                                                    // 77
+install("session");                                                          // 78
+install("less");                                                             // 79
+install("accounts-ui-unstyled");                                             // 80
+install("accounts-ui");                                                      // 81
+                                                                             // 82
 ///////////////////////////////////////////////////////////////////////////////
 
 },"process.js":["process",function(require,exports,module){

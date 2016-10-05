@@ -76,7 +76,7 @@ exports.Promise.prototype.done = function (onFulfilled, onRejected) {           
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                     //
 exports.name = "meteor-promise";                                                                                    // 1
-exports.version = "0.7.2";                                                                                          // 2
+exports.version = "0.7.4";                                                                                          // 2
 exports.main = "promise_client.js";                                                                                 // 3
                                                                                                                     // 4
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -454,11 +454,11 @@ function doResolve(fn, promise) {                                               
                                                                                                                     // 214
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}]},"node_modules":{"asap":{"raw.js":["domain",function(require,exports,module){
+}]}},"asap":{"raw.js":["domain",function(require,exports,module){
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //                                                                                                                  //
-// node_modules/meteor/promise/node_modules/promise/node_modules/asap/raw.js                                        //
+// node_modules/meteor/promise/node_modules/asap/raw.js                                                             //
 //                                                                                                                  //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                     //
@@ -566,7 +566,7 @@ function requestFlush() {                                                       
                                                                                                                     // 102
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}]}}}}}}}},{"extensions":[".js",".json"]});
+}]}}}}}},{"extensions":[".js",".json"]});
 var exports = require("./node_modules/meteor/promise/client.js");
 
 /* Exports */

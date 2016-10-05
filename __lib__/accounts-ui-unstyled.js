@@ -19,7 +19,7 @@ var Deps = Package.tracker.Deps;
 var ServiceConfiguration = Package['service-configuration'].ServiceConfiguration;
 var Accounts = Package['accounts-base'].Accounts;
 var _ = Package.underscore._;
-var Template = Package.templating.Template;
+var Template = Package['templating-runtime'].Template;
 var Session = Package.session.Session;
 var $ = Package.jquery.$;
 var jQuery = Package.jquery.jQuery;
@@ -161,7 +161,7 @@ Template["loginButtons"] = new Template("Template.loginButtons", (function() {  
   var view = this;                                                                                                     // 4
   return HTML.DIV({                                                                                                    // 5
     id: "login-buttons",                                                                                               // 6
-    "class": function() {                                                                                              // 7
+    class: function() {                                                                                                // 7
       return [ "login-buttons-dropdown-align-", Spacebars.mustache(view.lookup("align")) ];                            // 8
     }                                                                                                                  // 9
   }, "\n    ", Blaze.If(function() {                                                                                   // 10
@@ -176,7 +176,7 @@ Template["loginButtons"] = new Template("Template.loginButtons", (function() {  
         return [ "\n          ", Spacebars.include(view.lookupTemplate("_loginButtonsLoggingIn")), "\n        " ];     // 19
       }, function() {                                                                                                  // 20
         return [ "\n          ", HTML.DIV({                                                                            // 21
-          "class": "login-buttons-with-only-one-button"                                                                // 22
+          class: "login-buttons-with-only-one-button"                                                                  // 22
         }, "\n            ", Spacebars.include(view.lookupTemplate("_loginButtonsLoggingInSingleLoginButton")), "\n          "), "\n        " ];
       }), "\n      " ];                                                                                                // 24
     }, function() {                                                                                                    // 25
@@ -196,7 +196,7 @@ Template["_loginButtonsLoggedIn"] = new Template("Template._loginButtonsLoggedIn
     return [ "\n    ", Spacebars.include(view.lookupTemplate("_loginButtonsLoggedInDropdown")), "\n  " ];              // 39
   }, function() {                                                                                                      // 40
     return [ "\n    ", HTML.DIV({                                                                                      // 41
-      "class": "login-buttons-with-only-one-button"                                                                    // 42
+      class: "login-buttons-with-only-one-button"                                                                      // 42
     }, "\n      ", Spacebars.include(view.lookupTemplate("_loginButtonsLoggedInSingleLogoutButton")), "\n    "), "\n  " ];
   });                                                                                                                  // 44
 }));                                                                                                                   // 45
@@ -219,7 +219,7 @@ Template["_loginButtonsLoggedOut"] = new Template("Template._loginButtonsLoggedO
           return Spacebars.call(view.lookup("singleService"));                                                         // 62
         }, function() {                                                                                                // 63
           return [ " \n          ", HTML.DIV({                                                                         // 64
-            "class": "login-buttons-with-only-one-button"                                                              // 65
+            class: "login-buttons-with-only-one-button"                                                                // 65
           }, "\n            ", Blaze.If(function() {                                                                   // 66
             return Spacebars.call(view.lookup("loggingIn"));                                                           // 67
           }, function() {                                                                                              // 68
@@ -232,7 +232,7 @@ Template["_loginButtonsLoggedOut"] = new Template("Template._loginButtonsLoggedO
     }), "\n  " ];                                                                                                      // 75
   }, function() {                                                                                                      // 76
     return [ "\n    ", HTML.DIV({                                                                                      // 77
-      "class": "no-services"                                                                                           // 78
+      class: "no-services"                                                                                             // 78
     }, "No login services configured"), "\n  " ];                                                                      // 79
   });                                                                                                                  // 80
 }));                                                                                                                   // 81
@@ -244,7 +244,7 @@ Template["_loginButtonsMessages"] = new Template("Template._loginButtonsMessages
     return Spacebars.call(view.lookup("errorMessage"));                                                                // 87
   }, function() {                                                                                                      // 88
     return [ "\n    ", HTML.DIV({                                                                                      // 89
-      "class": "message error-message"                                                                                 // 90
+      class: "message error-message"                                                                                   // 90
     }, Blaze.View("lookup:errorMessage", function() {                                                                  // 91
       return Spacebars.mustache(view.lookup("errorMessage"));                                                          // 92
     })), "\n  " ];                                                                                                     // 93
@@ -252,7 +252,7 @@ Template["_loginButtonsMessages"] = new Template("Template._loginButtonsMessages
     return Spacebars.call(view.lookup("infoMessage"));                                                                 // 95
   }, function() {                                                                                                      // 96
     return [ "\n    ", HTML.DIV({                                                                                      // 97
-      "class": "message info-message"                                                                                  // 98
+      class: "message info-message"                                                                                    // 98
     }, Blaze.View("lookup:infoMessage", function() {                                                                   // 99
       return Spacebars.mustache(view.lookup("infoMessage"));                                                           // 100
     })), "\n  " ];                                                                                                     // 101
@@ -272,9 +272,9 @@ Template["_loginButtonsLoggingInPadding"] = new Template("Template._loginButtons
     return Spacebars.call(view.lookup("dropdown"));                                                                    // 115
   }, function() {                                                                                                      // 116
     return [ "\n    \n    ", HTML.DIV({                                                                                // 117
-      "class": "login-buttons-padding"                                                                                 // 118
+      class: "login-buttons-padding"                                                                                   // 118
     }, "\n      ", HTML.DIV({                                                                                          // 119
-      "class": "login-button single-login-button",                                                                     // 120
+      class: "login-button single-login-button",                                                                       // 120
       style: "visibility: hidden;",                                                                                    // 121
       id: "login-buttons-logout"                                                                                       // 122
     }, HTML.CharRef({                                                                                                  // 123
@@ -283,7 +283,7 @@ Template["_loginButtonsLoggingInPadding"] = new Template("Template._loginButtons
     })), "\n    "), "\n  " ];                                                                                          // 126
   }, function() {                                                                                                      // 127
     return [ "\n    \n    ", HTML.DIV({                                                                                // 128
-      "class": "login-buttons-padding"                                                                                 // 129
+      class: "login-buttons-padding"                                                                                   // 129
     }), "\n  " ];                                                                                                      // 130
   });                                                                                                                  // 131
 }));                                                                                                                   // 132
@@ -310,9 +310,9 @@ Template.__checkName("_loginButtonsLoggedOutSingleLoginButton");                
 Template["_loginButtonsLoggedOutSingleLoginButton"] = new Template("Template._loginButtonsLoggedOutSingleLoginButton", (function() {
   var view = this;                                                                                                     // 4
   return HTML.DIV({                                                                                                    // 5
-    "class": "login-text-and-button"                                                                                   // 6
+    class: "login-text-and-button"                                                                                     // 6
   }, "\n    ", HTML.DIV({                                                                                              // 7
-    "class": function() {                                                                                              // 8
+    class: function() {                                                                                                // 8
       return [ "login-button single-login-button ", Blaze.Unless(function() {                                          // 9
         return Spacebars.call(view.lookup("configured"));                                                              // 10
       }, function() {                                                                                                  // 11
@@ -323,7 +323,7 @@ Template["_loginButtonsLoggedOutSingleLoginButton"] = new Template("Template._lo
       return [ "login-buttons-", Spacebars.mustache(view.lookup("name")) ];                                            // 16
     }                                                                                                                  // 17
   }, "\n      ", HTML.DIV({                                                                                            // 18
-    "class": "login-image",                                                                                            // 19
+    class: "login-image",                                                                                              // 19
     id: function() {                                                                                                   // 20
       return [ "login-buttons-image-", Spacebars.mustache(view.lookup("name")) ];                                      // 21
     }                                                                                                                  // 22
@@ -331,7 +331,7 @@ Template["_loginButtonsLoggedOutSingleLoginButton"] = new Template("Template._lo
     return Spacebars.call(view.lookup("configured"));                                                                  // 24
   }, function() {                                                                                                      // 25
     return [ "\n        ", HTML.SPAN({                                                                                 // 26
-      "class": function() {                                                                                            // 27
+      class: function() {                                                                                              // 27
         return [ "text-besides-image sign-in-text-", Spacebars.mustache(view.lookup("name")) ];                        // 28
       }                                                                                                                // 29
     }, "Sign in with ", Blaze.View("lookup:capitalizedName", function() {                                              // 30
@@ -339,7 +339,7 @@ Template["_loginButtonsLoggedOutSingleLoginButton"] = new Template("Template._lo
     })), "\n      " ];                                                                                                 // 32
   }, function() {                                                                                                      // 33
     return [ "\n        ", HTML.SPAN({                                                                                 // 34
-      "class": function() {                                                                                            // 35
+      class: function() {                                                                                              // 35
         return [ "text-besides-image configure-text-", Spacebars.mustache(view.lookup("name")) ];                      // 36
       }                                                                                                                // 37
     }, "Configure ", Blaze.View("lookup:capitalizedName", function() {                                                 // 38
@@ -352,7 +352,7 @@ Template.__checkName("_loginButtonsLoggingInSingleLoginButton");                
 Template["_loginButtonsLoggingInSingleLoginButton"] = new Template("Template._loginButtonsLoggingInSingleLoginButton", (function() {
   var view = this;                                                                                                     // 46
   return HTML.DIV({                                                                                                    // 47
-    "class": "login-text-and-button"                                                                                   // 48
+    class: "login-text-and-button"                                                                                     // 48
   }, "\n    ", Spacebars.include(view.lookupTemplate("_loginButtonsLoggingIn")), "\n  ");                              // 49
 }));                                                                                                                   // 50
                                                                                                                        // 51
@@ -360,9 +360,9 @@ Template.__checkName("_loginButtonsLoggedInSingleLogoutButton");                
 Template["_loginButtonsLoggedInSingleLogoutButton"] = new Template("Template._loginButtonsLoggedInSingleLogoutButton", (function() {
   var view = this;                                                                                                     // 54
   return HTML.DIV({                                                                                                    // 55
-    "class": "login-text-and-button"                                                                                   // 56
+    class: "login-text-and-button"                                                                                     // 56
   }, "\n    ", HTML.DIV({                                                                                              // 57
-    "class": "login-display-name"                                                                                      // 58
+    class: "login-display-name"                                                                                        // 58
   }, "\n      ", Blaze.View("lookup:displayName", function() {                                                         // 59
     return Spacebars.mustache(view.lookup("displayName"));                                                             // 60
   }), "\n    "), HTML.Raw('\n    <div class="login-button single-login-button" id="login-buttons-logout">Sign Out</div>\n  '));
@@ -390,9 +390,9 @@ Template.__checkName("_loginButtonsLoggedInDropdown");                          
 Template["_loginButtonsLoggedInDropdown"] = new Template("Template._loginButtonsLoggedInDropdown", (function() {       // 3
   var view = this;                                                                                                     // 4
   return HTML.DIV({                                                                                                    // 5
-    "class": "login-link-and-dropdown-list"                                                                            // 6
+    class: "login-link-and-dropdown-list"                                                                              // 6
   }, "\n    ", HTML.A({                                                                                                // 7
-    "class": "login-link-text",                                                                                        // 8
+    class: "login-link-text",                                                                                          // 8
     id: "login-name-link"                                                                                              // 9
   }, "\n      ", Blaze.View("lookup:displayName", function() {                                                         // 10
     return Spacebars.mustache(view.lookup("displayName"));                                                             // 11
@@ -401,11 +401,11 @@ Template["_loginButtonsLoggedInDropdown"] = new Template("Template._loginButtons
   }, function() {                                                                                                      // 14
     return [ "\n      ", HTML.DIV({                                                                                    // 15
       id: "login-dropdown-list",                                                                                       // 16
-      "class": "accounts-dialog"                                                                                       // 17
+      class: "accounts-dialog"                                                                                         // 17
     }, "\n        ", HTML.A({                                                                                          // 18
-      "class": "login-close-text"                                                                                      // 19
+      class: "login-close-text"                                                                                        // 19
     }, "Close"), "\n        ", HTML.DIV({                                                                              // 20
-      "class": "login-close-text-clear"                                                                                // 21
+      class: "login-close-text-clear"                                                                                  // 21
     }), "\n\n        ", Blaze.If(function() {                                                                          // 22
       return Spacebars.call(view.lookup("inMessageOnlyFlow"));                                                         // 23
     }, function() {                                                                                                    // 24
@@ -429,7 +429,7 @@ Template["_loginButtonsLoggedInDropdownActions"] = new Template("Template._login
     return Spacebars.call(view.lookup("allowChangingPassword"));                                                       // 42
   }, function() {                                                                                                      // 43
     return [ "\n    ", HTML.DIV({                                                                                      // 44
-      "class": "login-button",                                                                                         // 45
+      class: "login-button",                                                                                           // 45
       id: "login-buttons-open-change-password"                                                                         // 46
     }, "\n      Change password\n    "), "\n  " ];                                                                     // 47
   }), HTML.Raw('\n\n  <div class="login-button" id="login-buttons-logout">\n    Sign out\n  </div>\n\n  '), Spacebars.include(view.lookupTemplate("_loginButtonsMessages")) ];
@@ -439,26 +439,26 @@ Template.__checkName("_loginButtonsLoggedOutDropdown");                         
 Template["_loginButtonsLoggedOutDropdown"] = new Template("Template._loginButtonsLoggedOutDropdown", (function() {     // 52
   var view = this;                                                                                                     // 53
   return HTML.DIV({                                                                                                    // 54
-    "class": function() {                                                                                              // 55
+    class: function() {                                                                                                // 55
       return [ "login-link-and-dropdown-list ", Spacebars.mustache(view.lookup("additionalClasses")) ];                // 56
     }                                                                                                                  // 57
   }, "\n    ", Blaze.If(function() {                                                                                   // 58
     return Spacebars.call(view.lookup("dropdownVisible"));                                                             // 59
   }, function() {                                                                                                      // 60
     return [ "\n      \n      ", HTML.A({                                                                              // 61
-      "class": "login-link-text",                                                                                      // 62
+      class: "login-link-text",                                                                                        // 62
       id: "login-sign-in-link"                                                                                         // 63
     }, "Sign in ▾"), "\n      ", HTML.DIV({                                                                            // 64
       id: "login-dropdown-list",                                                                                       // 65
-      "class": "accounts-dialog"                                                                                       // 66
+      class: "accounts-dialog"                                                                                         // 66
     }, "\n        ", HTML.A({                                                                                          // 67
-      "class": "login-close-text"                                                                                      // 68
+      class: "login-close-text"                                                                                        // 68
     }, "Close"), "\n        ", Blaze.If(function() {                                                                   // 69
       return Spacebars.call(view.lookup("loggingIn"));                                                                 // 70
     }, function() {                                                                                                    // 71
       return [ "\n          ", Spacebars.include(view.lookupTemplate("_loginButtonsLoggingIn")), "\n        " ];       // 72
     }), "\n        ", HTML.DIV({                                                                                       // 73
-      "class": "login-close-text-clear"                                                                                // 74
+      class: "login-close-text-clear"                                                                                  // 74
     }), "\n        ", Spacebars.include(view.lookupTemplate("_loginButtonsLoggedOutAllServices")), "\n      "), "\n    " ];
   }, function() {                                                                                                      // 76
     return [ "\n      ", Blaze.If(function() {                                                                         // 77
@@ -467,7 +467,7 @@ Template["_loginButtonsLoggedOutDropdown"] = new Template("Template._loginButton
       return [ "\n        \n        ", Spacebars.include(view.lookupTemplate("_loginButtonsLoggingIn")), "\n      " ];
     }, function() {                                                                                                    // 81
       return [ "\n        ", HTML.A({                                                                                  // 82
-        "class": "login-link-text",                                                                                    // 83
+        class: "login-link-text",                                                                                      // 83
         id: "login-sign-in-link"                                                                                       // 84
       }, "Sign in ▾"), "\n      " ];                                                                                   // 85
     }), "\n    " ];                                                                                                    // 86
@@ -513,13 +513,13 @@ Template["_loginButtonsLoggedOutPasswordService"] = new Template("Template._logi
     return [ "\n    ", Spacebars.include(view.lookupTemplate("_forgotPasswordForm")), "\n  " ];                        // 126
   }, function() {                                                                                                      // 127
     return [ "\n    ", HTML.DIV({                                                                                      // 128
-      "class": "login-form login-password-form"                                                                        // 129
+      class: "login-form login-password-form"                                                                          // 129
     }, "\n      ", Blaze.Each(function() {                                                                             // 130
       return Spacebars.call(view.lookup("fields"));                                                                    // 131
     }, function() {                                                                                                    // 132
       return [ "\n        ", Spacebars.include(view.lookupTemplate("_loginButtonsFormField")), "\n      " ];           // 133
     }), "\n\n      ", Spacebars.include(view.lookupTemplate("_loginButtonsMessages")), "\n\n      ", HTML.DIV({        // 134
-      "class": "login-button login-button-form-submit",                                                                // 135
+      class: "login-button login-button-form-submit",                                                                  // 135
       id: "login-buttons-password"                                                                                     // 136
     }, "\n        ", Blaze.If(function() {                                                                             // 137
       return Spacebars.call(view.lookup("inSignupFlow"));                                                              // 138
@@ -534,19 +534,19 @@ Template["_loginButtonsLoggedOutPasswordService"] = new Template("Template._logi
         return Spacebars.call(view.lookup("showCreateAccountLink"));                                                   // 147
       }, function() {                                                                                                  // 148
         return [ "\n          ", HTML.DIV({                                                                            // 149
-          "class": "additional-link-container"                                                                         // 150
+          class: "additional-link-container"                                                                           // 150
         }, "\n            ", HTML.A({                                                                                  // 151
           id: "signup-link",                                                                                           // 152
-          "class": "additional-link"                                                                                   // 153
+          class: "additional-link"                                                                                     // 153
         }, "Create account"), "\n          "), "\n        " ];                                                         // 154
       }), "\n\n        ", Blaze.If(function() {                                                                        // 155
         return Spacebars.call(view.lookup("showForgotPasswordLink"));                                                  // 156
       }, function() {                                                                                                  // 157
         return [ "\n          ", HTML.DIV({                                                                            // 158
-          "class": "additional-link-container"                                                                         // 159
+          class: "additional-link-container"                                                                           // 159
         }, "\n            ", HTML.A({                                                                                  // 160
           id: "forgot-password-link",                                                                                  // 161
-          "class": "additional-link"                                                                                   // 162
+          class: "additional-link"                                                                                     // 162
         }, "Forgot password"), "\n          "), "\n        " ];                                                        // 163
       }), "\n      " ];                                                                                                // 164
     }), "\n\n      ", Blaze.If(function() {                                                                            // 165
@@ -561,7 +561,7 @@ Template.__checkName("_forgotPasswordForm");                                    
 Template["_forgotPasswordForm"] = new Template("Template._forgotPasswordForm", (function() {                           // 174
   var view = this;                                                                                                     // 175
   return HTML.DIV({                                                                                                    // 176
-    "class": "login-form"                                                                                              // 177
+    class: "login-form"                                                                                                // 177
   }, HTML.Raw('\n    <div id="forgot-password-email-label-and-input"> \n      <label id="forgot-password-email-label" for="forgot-password-email">Email</label>\n      <input id="forgot-password-email" type="email">\n    </div>\n\n    '), Spacebars.include(view.lookupTemplate("_loginButtonsMessages")), HTML.Raw('\n\n    <div class="login-button login-button-form-submit" id="login-buttons-forgot-password">\n      Reset password\n    </div>\n\n    '), Spacebars.include(view.lookupTemplate("_loginButtonsBackToLoginLink")), "\n  ");
 }));                                                                                                                   // 179
                                                                                                                        // 180
@@ -585,7 +585,7 @@ Template["_loginButtonsFormField"] = new Template("Template._loginButtonsFormFie
       id: function() {                                                                                                 // 198
         return [ "login-", Spacebars.mustache(view.lookup("fieldName")), "-label" ];                                   // 199
       },                                                                                                               // 200
-      "for": function() {                                                                                              // 201
+      for: function() {                                                                                                // 201
         return [ "login-", Spacebars.mustache(view.lookup("fieldName")) ];                                             // 202
       }                                                                                                                // 203
     }, "\n        ", Blaze.View("lookup:fieldLabel", function() {                                                      // 204
@@ -642,22 +642,22 @@ Template["_resetPasswordDialog"] = new Template("Template._resetPasswordDialog",
     return Spacebars.call(view.lookup("inResetPasswordFlow"));                                                         // 12
   }, function() {                                                                                                      // 13
     return [ "\n    ", HTML.DIV({                                                                                      // 14
-      "class": "hide-background"                                                                                       // 15
+      class: "hide-background"                                                                                         // 15
     }), "\n\n    ", HTML.DIV({                                                                                         // 16
-      "class": "accounts-dialog accounts-centered-dialog"                                                              // 17
+      class: "accounts-dialog accounts-centered-dialog"                                                                // 17
     }, "\n      ", HTML.LABEL({                                                                                        // 18
       id: "reset-password-new-password-label",                                                                         // 19
-      "for": "reset-password-new-password"                                                                             // 20
+      for: "reset-password-new-password"                                                                               // 20
     }, "\n        New password\n      "), "\n\n      ", HTML.DIV({                                                     // 21
-      "class": "reset-password-new-password-wrapper"                                                                   // 22
+      class: "reset-password-new-password-wrapper"                                                                     // 22
     }, "\n        ", HTML.INPUT({                                                                                      // 23
       id: "reset-password-new-password",                                                                               // 24
       type: "password"                                                                                                 // 25
     }), "\n      "), "\n\n      ", Spacebars.include(view.lookupTemplate("_loginButtonsMessages")), "\n\n      ", HTML.DIV({
-      "class": "login-button login-button-form-submit",                                                                // 27
+      class: "login-button login-button-form-submit",                                                                  // 27
       id: "login-buttons-reset-password-button"                                                                        // 28
     }, "\n        Set password\n      "), "\n\n      ", HTML.A({                                                       // 29
-      "class": "accounts-close",                                                                                       // 30
+      class: "accounts-close",                                                                                         // 30
       id: "login-buttons-cancel-reset-password"                                                                        // 31
     }, HTML.CharRef({                                                                                                  // 32
       html: "&times;",                                                                                                 // 33
@@ -673,11 +673,11 @@ Template["_justResetPasswordDialog"] = new Template("Template._justResetPassword
     return Spacebars.call(view.lookup("visible"));                                                                     // 43
   }, function() {                                                                                                      // 44
     return [ "\n    ", HTML.DIV({                                                                                      // 45
-      "class": "accounts-dialog accounts-centered-dialog"                                                              // 46
+      class: "accounts-dialog accounts-centered-dialog"                                                                // 46
     }, "\n      Password reset.\n      You are now logged in as ", Blaze.View("lookup:displayName", function() {       // 47
       return Spacebars.mustache(view.lookup("displayName"));                                                           // 48
     }), ".\n      ", HTML.DIV({                                                                                        // 49
-      "class": "login-button",                                                                                         // 50
+      class: "login-button",                                                                                           // 50
       id: "just-verified-dismiss-button"                                                                               // 51
     }, "Dismiss"), "\n    "), "\n  " ];                                                                                // 52
   });                                                                                                                  // 53
@@ -690,22 +690,22 @@ Template["_enrollAccountDialog"] = new Template("Template._enrollAccountDialog",
     return Spacebars.call(view.lookup("inEnrollAccountFlow"));                                                         // 60
   }, function() {                                                                                                      // 61
     return [ "\n    ", HTML.DIV({                                                                                      // 62
-      "class": "hide-background"                                                                                       // 63
+      class: "hide-background"                                                                                         // 63
     }), "\n\n    ", HTML.DIV({                                                                                         // 64
-      "class": "accounts-dialog accounts-centered-dialog"                                                              // 65
+      class: "accounts-dialog accounts-centered-dialog"                                                                // 65
     }, "\n      ", HTML.LABEL({                                                                                        // 66
       id: "enroll-account-password-label",                                                                             // 67
-      "for": "enroll-account-password"                                                                                 // 68
+      for: "enroll-account-password"                                                                                   // 68
     }, "\n        Choose a password\n      "), "\n\n      ", HTML.DIV({                                                // 69
-      "class": "enroll-account-password-wrapper"                                                                       // 70
+      class: "enroll-account-password-wrapper"                                                                         // 70
     }, "\n        ", HTML.INPUT({                                                                                      // 71
       id: "enroll-account-password",                                                                                   // 72
       type: "password"                                                                                                 // 73
     }), "\n      "), "\n\n      ", Spacebars.include(view.lookupTemplate("_loginButtonsMessages")), "\n\n      ", HTML.DIV({
-      "class": "login-button login-button-form-submit",                                                                // 75
+      class: "login-button login-button-form-submit",                                                                  // 75
       id: "login-buttons-enroll-account-button"                                                                        // 76
     }, "\n        Create account\n      "), "\n\n      ", HTML.A({                                                     // 77
-      "class": "accounts-close",                                                                                       // 78
+      class: "accounts-close",                                                                                         // 78
       id: "login-buttons-cancel-enroll-account"                                                                        // 79
     }, HTML.CharRef({                                                                                                  // 80
       html: "&times;",                                                                                                 // 81
@@ -721,11 +721,11 @@ Template["_justVerifiedEmailDialog"] = new Template("Template._justVerifiedEmail
     return Spacebars.call(view.lookup("visible"));                                                                     // 91
   }, function() {                                                                                                      // 92
     return [ "\n    ", HTML.DIV({                                                                                      // 93
-      "class": "accounts-dialog accounts-centered-dialog"                                                              // 94
+      class: "accounts-dialog accounts-centered-dialog"                                                                // 94
     }, "\n      Email verified.\n      You are now logged in as ", Blaze.View("lookup:displayName", function() {       // 95
       return Spacebars.mustache(view.lookup("displayName"));                                                           // 96
     }), ".\n      ", HTML.DIV({                                                                                        // 97
-      "class": "login-button",                                                                                         // 98
+      class: "login-button",                                                                                           // 98
       id: "just-verified-dismiss-button"                                                                               // 99
     }, "Dismiss"), "\n    "), "\n  " ];                                                                                // 100
   });                                                                                                                  // 101
@@ -739,18 +739,18 @@ Template["_configureLoginServiceDialog"] = new Template("Template._configureLogi
   }, function() {                                                                                                      // 109
     return [ "\n    ", HTML.DIV({                                                                                      // 110
       id: "configure-login-service-dialog",                                                                            // 111
-      "class": "accounts-dialog accounts-centered-dialog"                                                              // 112
+      class: "accounts-dialog accounts-centered-dialog"                                                                // 112
     }, "\n      ", Spacebars.include(view.lookupTemplate("configurationSteps")), "\n\n      ", HTML.P("\n        Now, copy over some details.\n      "), "\n      ", HTML.P("\n        ", HTML.TABLE("\n          ", HTML.COLGROUP("\n            ", HTML.COL({
       span: "1",                                                                                                       // 114
-      "class": "configuration_labels"                                                                                  // 115
+      class: "configuration_labels"                                                                                    // 115
     }), "\n            ", HTML.COL({                                                                                   // 116
       span: "1",                                                                                                       // 117
-      "class": "configuration_inputs"                                                                                  // 118
+      class: "configuration_inputs"                                                                                    // 118
     }), "\n          "), "\n          ", Blaze.Each(function() {                                                       // 119
       return Spacebars.call(view.lookup("configurationFields"));                                                       // 120
     }, function() {                                                                                                    // 121
       return [ "\n            ", HTML.TR("\n              ", HTML.TD("\n                ", HTML.LABEL({                // 122
-        "for": function() {                                                                                            // 123
+        for: function() {                                                                                              // 123
           return [ "configure-login-service-dialog-", Spacebars.mustache(view.lookup("property")) ];                   // 124
         }                                                                                                              // 125
       }, Blaze.View("lookup:label", function() {                                                                       // 126
@@ -762,7 +762,7 @@ Template["_configureLoginServiceDialog"] = new Template("Template._configureLogi
         type: "text"                                                                                                   // 132
       }), "\n              "), "\n            "), "\n          " ];                                                    // 133
     }), "\n        "), "\n      "), "\n      ", HTML.P({                                                               // 134
-      "class": "new-section"                                                                                           // 135
+      class: "new-section"                                                                                             // 135
     }, "\n        Choose the login style:\n      "), "\n      ", HTML.P("\n        ", HTML.CharRef({                   // 136
       html: "&emsp;",                                                                                                  // 137
       str: " "                                                                                                         // 138
@@ -773,7 +773,7 @@ Template["_configureLoginServiceDialog"] = new Template("Template._configureLogi
       name: "loginStyle",                                                                                              // 143
       value: "popup"                                                                                                   // 144
     }), "\n        ", HTML.LABEL({                                                                                     // 145
-      "for": "configure-login-service-dialog-popupBasedLogin"                                                          // 146
+      for: "configure-login-service-dialog-popupBasedLogin"                                                            // 146
     }, "Popup-based login (recommended for most applications)"), "\n\n        ", HTML.BR(), HTML.CharRef({             // 147
       html: "&emsp;",                                                                                                  // 148
       str: " "                                                                                                         // 149
@@ -783,21 +783,21 @@ Template["_configureLoginServiceDialog"] = new Template("Template._configureLogi
       name: "loginStyle",                                                                                              // 153
       value: "redirect"                                                                                                // 154
     }), "\n        ", HTML.LABEL({                                                                                     // 155
-      "for": "configure-login-service-dialog-redirectBasedLogin"                                                       // 156
+      for: "configure-login-service-dialog-redirectBasedLogin"                                                         // 156
     }, "\n          Redirect-based login (special cases explained\n          ", HTML.A({                               // 157
       href: "https://github.com/meteor/meteor/wiki/OAuth-for-mobile-Meteor-clients#popup-versus-redirect-flow",        // 158
       target: "_blank"                                                                                                 // 159
     }, "here"), ")\n        "), "\n      "), "\n      ", HTML.DIV({                                                    // 160
-      "class": "new-section"                                                                                           // 161
+      class: "new-section"                                                                                             // 161
     }, "\n        ", HTML.DIV({                                                                                        // 162
-      "class": "login-button configure-login-service-dismiss-button"                                                   // 163
+      class: "login-button configure-login-service-dismiss-button"                                                     // 163
     }, "\n          I'll do this later\n        "), "\n        ", HTML.A({                                             // 164
-      "class": "accounts-close configure-login-service-dismiss-button"                                                 // 165
+      class: "accounts-close configure-login-service-dismiss-button"                                                   // 165
     }, HTML.CharRef({                                                                                                  // 166
       html: "&times;",                                                                                                 // 167
       str: "×"                                                                                                         // 168
     })), "\n\n        ", HTML.DIV({                                                                                    // 169
-      "class": function() {                                                                                            // 170
+      class: function() {                                                                                              // 170
         return [ "login-button login-button-configure ", Blaze.If(function() {                                         // 171
           return Spacebars.call(view.lookup("saveDisabled"));                                                          // 172
         }, function() {                                                                                                // 173
@@ -816,10 +816,10 @@ Template["_loginButtonsMessagesDialog"] = new Template("Template._loginButtonsMe
     return Spacebars.call(view.lookup("visible"));                                                                     // 186
   }, function() {                                                                                                      // 187
     return [ "\n    ", HTML.DIV({                                                                                      // 188
-      "class": "accounts-dialog accounts-centered-dialog",                                                             // 189
+      class: "accounts-dialog accounts-centered-dialog",                                                               // 189
       id: "login-buttons-message-dialog"                                                                               // 190
     }, "\n      ", Spacebars.include(view.lookupTemplate("_loginButtonsMessages")), "\n      ", HTML.DIV({             // 191
-      "class": "login-button",                                                                                         // 192
+      class: "login-button",                                                                                           // 192
       id: "messages-dialog-dismiss-button"                                                                             // 193
     }, "Dismiss"), "\n    "), "\n  " ];                                                                                // 194
   });                                                                                                                  // 195
@@ -832,10 +832,10 @@ Template["_configureLoginOnDesktopDialog"] = new Template("Template._configureLo
     return Spacebars.call(view.lookup("visible"));                                                                     // 202
   }, function() {                                                                                                      // 203
     return [ "\n    ", HTML.DIV({                                                                                      // 204
-      "class": "accounts-dialog accounts-centered-dialog",                                                             // 205
+      class: "accounts-dialog accounts-centered-dialog",                                                               // 205
       id: "configure-on-desktop-dialog"                                                                                // 206
     }, "\n      ", HTML.P("\n        Please configure login on a desktop browser.\n      "), "\n      ", HTML.DIV({    // 207
-      "class": "login-button",                                                                                         // 208
+      class: "login-button",                                                                                           // 208
       id: "configure-on-desktop-dismiss-button"                                                                        // 209
     }, "Dismiss"), "\n    "), "\n  " ];                                                                                // 210
   });                                                                                                                  // 211

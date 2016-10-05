@@ -21,12 +21,12 @@ var Deps = Package.tracker.Deps;
 var check = Package.check.check;
 var Match = Package.check.Match;
 var _ = Package.underscore._;
-var HTML = Package.htmljs.HTML;
 var ObserveSequence = Package['observe-sequence'].ObserveSequence;
 var ReactiveVar = Package['reactive-var'].ReactiveVar;
+var HTML = Package.htmljs.HTML;
 
 /* Package-scope variables */
-var Blaze, AttributeHandler, makeAttributeHandler, ElementAttributesUpdater, UI, Handlebars;
+var Blaze, AttributeHandler, ElementAttributesUpdater, UI, Handlebars;
 
 (function(){
 
@@ -1075,7 +1075,7 @@ AttributeHandler.extend = function (options) {                                  
 //                                                                                                                     // 65
 // Extended below to support classes, SVG elements and styles.                                                         // 66
                                                                                                                        // 67
-var DiffingAttributeHandler = AttributeHandler.extend({                                                                // 68
+Blaze._DiffingAttributeHandler = AttributeHandler.extend({                                                             // 68
   update: function (element, oldValue, value) {                                                                        // 69
     if (!this.getCurrentValue || !this.setValue || !this.parseValue)                                                   // 70
       throw new Error("Missing methods in subclass of 'DiffingAttributeHandler'");                                     // 71
@@ -1101,7 +1101,7 @@ var DiffingAttributeHandler = AttributeHandler.extend({                         
   }                                                                                                                    // 91
 });                                                                                                                    // 92
                                                                                                                        // 93
-var ClassHandler = DiffingAttributeHandler.extend({                                                                    // 94
+var ClassHandler = Blaze._DiffingAttributeHandler.extend({                                                             // 94
   // @param rawValue {String}                                                                                          // 95
   getCurrentValue: function (element) {                                                                                // 96
     return element.className;                                                                                          // 97
@@ -1129,7 +1129,7 @@ var SVGClassHandler = ClassHandler.extend({                                     
   }                                                                                                                    // 119
 });                                                                                                                    // 120
                                                                                                                        // 121
-var StyleHandler = DiffingAttributeHandler.extend({                                                                    // 122
+var StyleHandler = Blaze._DiffingAttributeHandler.extend({                                                             // 122
   getCurrentValue: function (element) {                                                                                // 123
     return element.getAttribute('style');                                                                              // 124
   },                                                                                                                   // 125
@@ -1292,7 +1292,7 @@ var UrlHandler = AttributeHandler.extend({                                      
 });                                                                                                                    // 282
                                                                                                                        // 283
 // XXX make it possible for users to register attribute handlers!                                                      // 284
-makeAttributeHandler = function (elem, name, value) {                                                                  // 285
+Blaze._makeAttributeHandler = function (elem, name, value) {                                                           // 285
   // generally, use setAttribute but certain attributes need to be set                                                 // 286
   // by directly setting a JavaScript property on the DOM element.                                                     // 287
   if (name === 'class') {                                                                                              // 288
@@ -1357,7 +1357,7 @@ ElementAttributesUpdater.prototype.update = function(newAttrs) {                
     if (! _.has(handlers, k)) {                                                                                        // 347
       if (value !== null) {                                                                                            // 348
         // make new handler                                                                                            // 349
-        handler = makeAttributeHandler(elem, k, value);                                                                // 350
+        handler = Blaze._makeAttributeHandler(elem, k, value);                                                         // 350
         handlers[k] = handler;                                                                                         // 351
         oldValue = null;                                                                                               // 352
       }                                                                                                                // 353
