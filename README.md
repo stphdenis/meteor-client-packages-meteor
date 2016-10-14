@@ -1,5 +1,7 @@
 # meteor-client-packages-meteor
 
+###### YOU CAN CONTINUE TO USE THIS PACKAGE BUT YOU HAVE AN ALTERNATIVE THAT REFERENCE DIRECTLY ANY LOCAL METEOR SERVER : [meteor-webpack-client](https://www.npmjs.com/package/meteor-webpack-client).
+
 Use Meteor's client packages side in a non Meteor project.
 
 The packages given are :
