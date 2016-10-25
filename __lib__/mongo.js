@@ -827,7 +827,7 @@ Mongo.Collection.prototype._createCappedCollection = function (byteSize, maxDocu
 };                                                                                                                    // 704
                                                                                                                       //
 /**                                                                                                                   //
- * @summary Returns the [`Collection`](http://mongodb.github.io/node-mongodb-native/1.4/api-generated/collection.html) object corresponding to this collection from the [npm `mongodb` driver module](https://www.npmjs.com/package/mongodb) which is wrapped by `Mongo.Collection`.
+ * @summary Returns the [`Collection`](http://mongodb.github.io/node-mongodb-native/2.2/api/Collection.html) object corresponding to this collection from the [npm `mongodb` driver module](https://www.npmjs.com/package/mongodb) which is wrapped by `Mongo.Collection`.
  * @locus Server                                                                                                      //
  */                                                                                                                   //
 Mongo.Collection.prototype.rawCollection = function () {                                                              // 710
@@ -839,7 +839,7 @@ Mongo.Collection.prototype.rawCollection = function () {                        
 };                                                                                                                    // 716
                                                                                                                       //
 /**                                                                                                                   //
- * @summary Returns the [`Db`](http://mongodb.github.io/node-mongodb-native/1.4/api-generated/db.html) object corresponding to this collection's database connection from the [npm `mongodb` driver module](https://www.npmjs.com/package/mongodb) which is wrapped by `Mongo.Collection`.
+ * @summary Returns the [`Db`](http://mongodb.github.io/node-mongodb-native/2.2/api/Db.html) object corresponding to this collection's database connection from the [npm `mongodb` driver module](https://www.npmjs.com/package/mongodb) which is wrapped by `Mongo.Collection`.
  * @locus Server                                                                                                      //
  */                                                                                                                   //
 Mongo.Collection.prototype.rawDatabase = function () {                                                                // 722
