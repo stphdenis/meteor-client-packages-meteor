@@ -39,8 +39,8 @@ var require = meteorInstall({"node_modules":{"meteor":{"reactive-dict":{"reactiv
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                   //
 var _typeof;module.import('babel-runtime/helpers/typeof',{"default":function(v){_typeof=v}});                     //
-// XXX come up with a serialization method which canonicalizes object key                                         //
-// order, which would allow us to use objects as values for equals.                                               //
+// XXX come up with a serialization method which canonicalizes object key                                         // 1
+// order, which would allow us to use objects as values for equals.                                               // 2
 var stringify = function stringify(value) {                                                                       // 3
   if (value === undefined) return 'undefined';                                                                    // 4
   return EJSON.stringify(value);                                                                                  // 6
@@ -54,7 +54,7 @@ var changed = function changed(v) {                                             
   v && v.changed();                                                                                               // 15
 };                                                                                                                // 16
                                                                                                                   //
-// XXX COMPAT WITH 0.9.1 : accept migrationData instead of dictName                                               //
+// XXX COMPAT WITH 0.9.1 : accept migrationData instead of dictName                                               // 18
 ReactiveDict = function (_ReactiveDict) {                                                                         // 19
   function ReactiveDict(_x) {                                                                                     // 19
     return _ReactiveDict.apply(this, arguments);                                                                  // 19
@@ -66,22 +66,22 @@ ReactiveDict = function (_ReactiveDict) {                                       
                                                                                                                   //
   return ReactiveDict;                                                                                            // 19
 }(function (dictName) {                                                                                           // 19
-  // this.keys: key -> value                                                                                      //
+  // this.keys: key -> value                                                                                      // 20
   if (dictName) {                                                                                                 // 21
     if (typeof dictName === 'string') {                                                                           // 22
-      // the normal case, argument is a string name.                                                              //
-      // _registerDictForMigrate will throw an error on duplicate name.                                           //
+      // the normal case, argument is a string name.                                                              // 23
+      // _registerDictForMigrate will throw an error on duplicate name.                                           // 24
       ReactiveDict._registerDictForMigrate(dictName, this);                                                       // 25
       this.keys = ReactiveDict._loadMigratedDict(dictName) || {};                                                 // 26
       this.name = dictName;                                                                                       // 27
     } else if ((typeof dictName === 'undefined' ? 'undefined' : _typeof(dictName)) === 'object') {                // 28
-      // back-compat case: dictName is actually migrationData                                                     //
+      // back-compat case: dictName is actually migrationData                                                     // 29
       this.keys = dictName;                                                                                       // 30
     } else {                                                                                                      // 31
       throw new Error("Invalid ReactiveDict argument: " + dictName);                                              // 32
     }                                                                                                             // 33
   } else {                                                                                                        // 34
-    // no name given; no migration will be performed                                                              //
+    // no name given; no migration will be performed                                                              // 35
     this.keys = {};                                                                                               // 36
   }                                                                                                               // 37
                                                                                                                   //
@@ -91,21 +91,21 @@ ReactiveDict = function (_ReactiveDict) {                                       
 });                                                                                                               // 42
                                                                                                                   //
 _.extend(ReactiveDict.prototype, {                                                                                // 44
-  // set() began as a key/value method, but we are now overloading it                                             //
-  // to take an object of key/value pairs, similar to backbone                                                    //
-  // http://backbonejs.org/#Model-set                                                                             //
+  // set() began as a key/value method, but we are now overloading it                                             // 45
+  // to take an object of key/value pairs, similar to backbone                                                    // 46
+  // http://backbonejs.org/#Model-set                                                                             // 47
                                                                                                                   //
   set: function () {                                                                                              // 49
     function set(keyOrObject, value) {                                                                            // 49
       var self = this;                                                                                            // 50
                                                                                                                   //
       if ((typeof keyOrObject === 'undefined' ? 'undefined' : _typeof(keyOrObject)) === 'object' && value === undefined) {
-        // Called as `dict.set({...})`                                                                            //
+        // Called as `dict.set({...})`                                                                            // 53
         self._setObject(keyOrObject);                                                                             // 54
         return;                                                                                                   // 55
       }                                                                                                           // 56
-      // the input isn't an object, so it must be a key                                                           //
-      // and we resume with the rest of the function                                                              //
+      // the input isn't an object, so it must be a key                                                           // 57
+      // and we resume with the rest of the function                                                              // 58
       var key = keyOrObject;                                                                                      // 59
                                                                                                                   //
       value = stringify(value);                                                                                   // 61
@@ -137,12 +137,12 @@ _.extend(ReactiveDict.prototype, {                                              
       var self = this;                                                                                            // 83
                                                                                                                   //
       if ((typeof keyOrObject === 'undefined' ? 'undefined' : _typeof(keyOrObject)) === 'object' && value === undefined) {
-        // Called as `dict.setDefault({...})`                                                                     //
+        // Called as `dict.setDefault({...})`                                                                     // 86
         self._setDefaultObject(keyOrObject);                                                                      // 87
         return;                                                                                                   // 88
       }                                                                                                           // 89
-      // the input isn't an object, so it must be a key                                                           //
-      // and we resume with the rest of the function                                                              //
+      // the input isn't an object, so it must be a key                                                           // 90
+      // and we resume with the rest of the function                                                              // 91
       var key = keyOrObject;                                                                                      // 92
                                                                                                                   //
       if (!_.has(self.keys, key)) {                                                                               // 94
@@ -168,21 +168,21 @@ _.extend(ReactiveDict.prototype, {                                              
     function equals(key, value) {                                                                                 // 106
       var self = this;                                                                                            // 107
                                                                                                                   //
-      // Mongo.ObjectID is in the 'mongo' package                                                                 //
+      // Mongo.ObjectID is in the 'mongo' package                                                                 // 109
       var ObjectID = null;                                                                                        // 110
       if (Package.mongo) {                                                                                        // 111
         ObjectID = Package.mongo.Mongo.ObjectID;                                                                  // 112
       }                                                                                                           // 113
                                                                                                                   //
-      // We don't allow objects (or arrays that might include objects) for                                        //
-      // .equals, because JSON.stringify doesn't canonicalize object key                                          //
-      // order. (We can make equals have the right return value by parsing the                                    //
-      // current value and using EJSON.equals, but we won't have a canonical                                      //
-      // element of keyValueDeps[key] to store the dependency.) You can still use                                 //
-      // "EJSON.equals(reactiveDict.get(key), value)".                                                            //
-      //                                                                                                          //
-      // XXX we could allow arrays as long as we recursively check that there                                     //
-      // are no objects                                                                                           //
+      // We don't allow objects (or arrays that might include objects) for                                        // 115
+      // .equals, because JSON.stringify doesn't canonicalize object key                                          // 116
+      // order. (We can make equals have the right return value by parsing the                                    // 117
+      // current value and using EJSON.equals, but we won't have a canonical                                      // 118
+      // element of keyValueDeps[key] to store the dependency.) You can still use                                 // 119
+      // "EJSON.equals(reactiveDict.get(key), value)".                                                            // 120
+      //                                                                                                          // 121
+      // XXX we could allow arrays as long as we recursively check that there                                     // 122
+      // are no objects                                                                                           // 123
       if (typeof value !== 'string' && typeof value !== 'number' && typeof value !== 'boolean' && typeof value !== 'undefined' && !(value instanceof Date) && !(ObjectID && value instanceof ObjectID) && value !== null) {
         throw new Error("ReactiveDict.equals: value must be scalar");                                             // 131
       }                                                                                                           // 132
@@ -196,8 +196,8 @@ _.extend(ReactiveDict.prototype, {                                              
         var isNew = self.keyValueDeps[key][serializedValue].depend();                                             // 141
         if (isNew) {                                                                                              // 142
           Tracker.onInvalidate(function () {                                                                      // 143
-            // clean up [key][serializedValue] if it's now empty, so we don't                                     //
-            // use O(n) memory for n = values seen ever                                                           //
+            // clean up [key][serializedValue] if it's now empty, so we don't                                     // 144
+            // use O(n) memory for n = values seen ever                                                           // 145
             if (!self.keyValueDeps[key][serializedValue].hasDependents()) delete self.keyValueDeps[key][serializedValue];
           });                                                                                                     // 148
         }                                                                                                         // 149
@@ -304,11 +304,11 @@ _.extend(ReactiveDict.prototype, {                                              
     return _ensureKey;                                                                                            // 219
   }(),                                                                                                            // 219
                                                                                                                   //
-  // Get a JSON value that can be passed to the constructor to                                                    //
-  // create a new ReactiveDict with the same contents as this one                                                 //
+  // Get a JSON value that can be passed to the constructor to                                                    // 227
+  // create a new ReactiveDict with the same contents as this one                                                 // 228
   _getMigrationData: function () {                                                                                // 229
     function _getMigrationData() {                                                                                // 229
-      // XXX sanitize and make sure it's JSONible?                                                                //
+      // XXX sanitize and make sure it's JSONible?                                                                // 230
       return this.keys;                                                                                           // 231
     }                                                                                                             // 232
                                                                                                                   //
@@ -341,13 +341,13 @@ ReactiveDict._registerDictForMigrate = function (dictName, dict) {              
 };                                                                                                                // 16
                                                                                                                   //
 if (Meteor.isClient && Package.reload) {                                                                          // 18
-  // Put old migrated data into ReactiveDict._migratedDictData,                                                   //
-  // where it can be accessed by ReactiveDict._loadMigratedDict.                                                  //
+  // Put old migrated data into ReactiveDict._migratedDictData,                                                   // 19
+  // where it can be accessed by ReactiveDict._loadMigratedDict.                                                  // 20
   var migrationData = Package.reload.Reload._migrationData('reactive-dict');                                      // 21
   if (migrationData && migrationData.dicts) ReactiveDict._migratedDictData = migrationData.dicts;                 // 22
                                                                                                                   //
-  // On migration, assemble the data from all the dicts that have been                                            //
-  // registered.                                                                                                  //
+  // On migration, assemble the data from all the dicts that have been                                            // 25
+  // registered.                                                                                                  // 26
   Package.reload.Reload._onMigrate('reactive-dict', function () {                                                 // 27
     var dictsToMigrate = ReactiveDict._dictsToMigrate;                                                            // 28
     var dataToMigrate = {};                                                                                       // 29

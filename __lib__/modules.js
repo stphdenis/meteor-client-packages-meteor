@@ -137,7 +137,7 @@ install("promise", "meteor/promise/client.js");                              // 
 install("ecmascript-runtime", "meteor/ecmascript-runtime/runtime.js");       // 43
 install("babel-compiler");                                                   // 44
 install("ecmascript");                                                       // 45
-install("babel-runtime");                                                    // 46
+install("babel-runtime", "meteor/babel-runtime/babel-runtime.js");           // 46
 install("random");                                                           // 47
 install("mongo-id");                                                         // 48
 install("jquery", "meteor/jquery/main.js");                                  // 49

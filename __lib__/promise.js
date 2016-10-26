@@ -76,7 +76,7 @@ exports.Promise.prototype.done = function (onFulfilled, onRejected) {           
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                                                                                                     //
 exports.name = "meteor-promise";                                                                                    // 1
-exports.version = "0.7.4";                                                                                          // 2
+exports.version = "0.8.0";                                                                                          // 2
 exports.main = "promise_client.js";                                                                                 // 3
                                                                                                                     // 4
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

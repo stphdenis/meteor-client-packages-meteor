@@ -34,383 +34,429 @@ var hasOwn = Object.prototype.hasOwnProperty;                                   
 var S = typeof Symbol === "function" ? Symbol : {};                                                        // 2
 var iteratorSymbol = S.iterator || "@@iterator";                                                           // 3
                                                                                                            // 4
-meteorBabelHelpers = require("meteor-babel-helpers");                                                      // 5
-                                                                                                           // 6
-var BabelRuntime = {                                                                                       // 7
-  // es6.templateLiterals                                                                                  // 8
-  // Constructs the object passed to the tag function in a tagged                                          // 9
-  // template literal.                                                                                     // 10
-  taggedTemplateLiteralLoose: function (strings, raw) {                                                    // 11
-    // Babel's own version of this calls Object.freeze on `strings` and                                    // 12
-    // `strings.raw`, but it doesn't seem worth the compatibility and                                      // 13
-    // performance concerns.  If you're writing code against this helper,                                  // 14
-    // don't add properties to these objects.                                                              // 15
-    strings.raw = raw;                                                                                     // 16
-    return strings;                                                                                        // 17
-  },                                                                                                       // 18
-                                                                                                           // 19
-  // es6.classes                                                                                           // 20
-  // Checks that a class constructor is being called with `new`, and throws                                // 21
-  // an error if it is not.                                                                                // 22
-  classCallCheck: function (instance, Constructor) {                                                       // 23
-    if (!(instance instanceof Constructor)) {                                                              // 24
-      throw new TypeError("Cannot call a class as a function");                                            // 25
-    }                                                                                                      // 26
-  },                                                                                                       // 27
-                                                                                                           // 28
-  // es6.classes                                                                                           // 29
-  inherits: function (subClass, superClass) {                                                              // 30
-    if (typeof superClass !== "function" && superClass !== null) {                                         // 31
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }                                                                                                      // 33
+var hasDefineProperty = false;                                                                             // 5
+try {                                                                                                      // 6
+  // IE 8 has a broken Object.defineProperty, so feature-test by                                           // 7
+  // trying to call it.                                                                                    // 8
+  Object.defineProperty({}, 'x', {});                                                                      // 9
+  hasDefineProperty = true;                                                                                // 10
+} catch (e) {}                                                                                             // 11
+                                                                                                           // 12
+function defineProperties(target, props) {                                                                 // 13
+  for (var i = 0; i < props.length; i++) {                                                                 // 14
+    var descriptor = props[i];                                                                             // 15
+    descriptor.enumerable = descriptor.enumerable || false;                                                // 16
+    descriptor.configurable = true;                                                                        // 17
+    if ("value" in descriptor) descriptor.writable = true;                                                 // 18
+    Object.defineProperty(target, descriptor.key, descriptor);                                             // 19
+  }                                                                                                        // 20
+}                                                                                                          // 21
+                                                                                                           // 22
+exports.meteorBabelHelpers = require("meteor-babel-helpers");                                              // 23
+                                                                                                           // 24
+// Returns true if a given absolute identifier will be provided at runtime                                 // 25
+// by the babel-runtime package.                                                                           // 26
+exports.checkHelper = function checkHelper(id) {                                                           // 27
+  var parts = id.split("/");                                                                               // 28
+  var index = 0;                                                                                           // 29
+                                                                                                           // 30
+  // Skip over leading / and node_modules.                                                                 // 31
+  if (parts[index] === "") ++index;                                                                        // 32
+  if (parts[index] === "node_modules") ++index;                                                            // 33
                                                                                                            // 34
-    if (superClass) {                                                                                      // 35
-      if (Object.create) {                                                                                 // 36
-        // All but IE 8                                                                                    // 37
-        subClass.prototype = Object.create(superClass.prototype, {                                         // 38
-          constructor: {                                                                                   // 39
-            value: subClass,                                                                               // 40
-            enumerable: false,                                                                             // 41
-            writable: true,                                                                                // 42
-            configurable: true                                                                             // 43
-          }                                                                                                // 44
-        });                                                                                                // 45
-      } else {                                                                                             // 46
-        // IE 8 path.  Slightly worse for modern browsers, because `constructor`                           // 47
-        // is enumerable and shows up in the inspector unnecessarily.                                      // 48
-        // It's not an "own" property of any instance though.                                              // 49
-        //                                                                                                 // 50
-        // For correctness when writing code,                                                              // 51
-        // don't enumerate all the own-and-inherited properties of an instance                             // 52
-        // of a class and expect not to find `constructor` (but who does that?).                           // 53
-        var F = function () {                                                                              // 54
-          this.constructor = subClass;                                                                     // 55
-        };                                                                                                 // 56
-        F.prototype = superClass.prototype;                                                                // 57
-        subClass.prototype = new F();                                                                      // 58
-      }                                                                                                    // 59
-                                                                                                           // 60
-      // For modern browsers, this would be `subClass.__proto__ = superClass`,                             // 61
-      // but IE <=10 don't support `__proto__`, and in this case the difference                            // 62
-      // would be detectable; code that works in modern browsers could easily                              // 63
-      // fail on IE 8 if we ever used the `__proto__` trick.                                               // 64
-      //                                                                                                   // 65
-      // There's no perfect way to make static methods inherited if they are                               // 66
-      // assigned after declaration of the classes.  The best we can do is                                 // 67
-      // to copy them.  In other words, when you write `class Foo                                          // 68
-      // extends Bar`, we copy the static methods from Bar onto Foo, but future                            // 69
-      // ones are not copied.                                                                              // 70
-      //                                                                                                   // 71
-      // For correctness when writing code, don't add static methods to a class                            // 72
-      // after you subclass it.                                                                            // 73
-                                                                                                           // 74
-      // The ecmascript-runtime package provides adequate polyfills for                                    // 75
-      // all of these Object.* functions (and Array#forEach), and anyone                                   // 76
-      // using babel-runtime is almost certainly using it because of the                                   // 77
-      // ecmascript package, which also implies ecmascript-runtime.                                        // 78
-      Object.getOwnPropertyNames(superClass).forEach(function (k) {                                        // 79
-        // This property descriptor dance preserves getter/setter behavior                                 // 80
-        // in browsers that support accessor properties (all except                                        // 81
-        // IE8). In IE8, the superClass can't have accessor properties                                     // 82
-        // anyway, so this code is still safe.                                                             // 83
-        var descriptor = Object.getOwnPropertyDescriptor(superClass, k);                                   // 84
-        if (descriptor && typeof descriptor === "object") {                                                // 85
-          if (Object.getOwnPropertyDescriptor(subClass, k)) {                                              // 86
-            // If subClass already has a property by this name, then it                                    // 87
-            // would not be inherited, so it should not be copied. This                                    // 88
-            // notably excludes properties like .prototype and .name.                                      // 89
-            return;                                                                                        // 90
-          }                                                                                                // 91
-                                                                                                           // 92
-          Object.defineProperty(subClass, k, descriptor);                                                  // 93
-        }                                                                                                  // 94
-      });                                                                                                  // 95
-    }                                                                                                      // 96
-  },                                                                                                       // 97
-                                                                                                           // 98
-  createClass: (function () {                                                                              // 99
-    var hasDefineProperty = false;                                                                         // 100
-    try {                                                                                                  // 101
-      // IE 8 has a broken Object.defineProperty, so feature-test by                                       // 102
-      // trying to call it.                                                                                // 103
-      Object.defineProperty({}, 'x', {});                                                                  // 104
-      hasDefineProperty = true;                                                                            // 105
-    } catch (e) {}                                                                                         // 106
-                                                                                                           // 107
-    function defineProperties(target, props) {                                                             // 108
-      for (var i = 0; i < props.length; i++) {                                                             // 109
-        var descriptor = props[i];                                                                         // 110
-        descriptor.enumerable = descriptor.enumerable || false;                                            // 111
-        descriptor.configurable = true;                                                                    // 112
-        if ("value" in descriptor) descriptor.writable = true;                                             // 113
-        Object.defineProperty(target, descriptor.key, descriptor);                                         // 114
-      }                                                                                                    // 115
-    }                                                                                                      // 116
-                                                                                                           // 117
-    return function (Constructor, protoProps, staticProps) {                                               // 118
-      if (! hasDefineProperty) {                                                                           // 119
-        // e.g. `class Foo { get bar() {} }`.  If you try to use getters and                               // 120
-        // setters in IE 8, you will get a big nasty error, with or without                                // 121
-        // Babel.  I don't know of any other syntax features besides getters                               // 122
-        // and setters that will trigger this error.                                                       // 123
-        throw new Error(                                                                                   // 124
-          "Your browser does not support this type of class property.  " +                                 // 125
-            "For example, Internet Explorer 8 does not support getters and " +                             // 126
-            "setters.");                                                                                   // 127
-      }                                                                                                    // 128
-                                                                                                           // 129
-      if (protoProps) defineProperties(Constructor.prototype, protoProps);                                 // 130
-      if (staticProps) defineProperties(Constructor, staticProps);                                         // 131
-      return Constructor;                                                                                  // 132
-    };                                                                                                     // 133
-  })(),                                                                                                    // 134
-                                                                                                           // 135
-  "typeof": function (obj) {                                                                               // 136
-    return obj && obj.constructor === Symbol ? "symbol" : typeof obj;                                      // 137
-  },                                                                                                       // 138
-                                                                                                           // 139
-  possibleConstructorReturn: function (self, call) {                                                       // 140
-    if (! self) {                                                                                          // 141
-      throw new ReferenceError(                                                                            // 142
-        "this hasn't been initialised - super() hasn't been called"                                        // 143
-      );                                                                                                   // 144
-    }                                                                                                      // 145
-                                                                                                           // 146
-    var callType = typeof call;                                                                            // 147
-    if (call &&                                                                                            // 148
-        callType === "function" ||                                                                         // 149
-        callType === "object") {                                                                           // 150
-      return call;                                                                                         // 151
-    }                                                                                                      // 152
-                                                                                                           // 153
-    return self;                                                                                           // 154
-  },                                                                                                       // 155
-                                                                                                           // 156
-  interopRequireDefault: function (obj) {                                                                  // 157
-    return obj && obj.__esModule ? obj : { 'default': obj };                                               // 158
-  },                                                                                                       // 159
-                                                                                                           // 160
-  interopRequireWildcard: function (obj) {                                                                 // 161
-    if (obj && obj.__esModule) {                                                                           // 162
-      return obj;                                                                                          // 163
-    }                                                                                                      // 164
-                                                                                                           // 165
-    var newObj = {};                                                                                       // 166
-                                                                                                           // 167
-    if (obj != null) {                                                                                     // 168
-      for (var key in obj) {                                                                               // 169
-        if (hasOwn.call(obj, key)) {                                                                       // 170
-          newObj[key] = obj[key];                                                                          // 171
-        }                                                                                                  // 172
-      }                                                                                                    // 173
-    }                                                                                                      // 174
-                                                                                                           // 175
-    newObj["default"] = obj;                                                                               // 176
-    return newObj;                                                                                         // 177
-  },                                                                                                       // 178
-                                                                                                           // 179
-  interopExportWildcard: function (obj, defaults) {                                                        // 180
-    var newObj = defaults({}, obj);                                                                        // 181
-    delete newObj["default"];                                                                              // 182
-    return newObj;                                                                                         // 183
+  if (parts[index] !== "babel-runtime") {                                                                  // 35
+    return false;                                                                                          // 36
+  }                                                                                                        // 37
+                                                                                                           // 38
+  // Skip over babel-runtime.                                                                              // 39
+  ++index;                                                                                                 // 40
+                                                                                                           // 41
+  if (parts.length - index === 2) {                                                                        // 42
+    return parts[index] === "helpers" &&                                                                   // 43
+      hasOwn.call(BabelRuntime, stripDotJS(parts[index + 1]));                                             // 44
+  }                                                                                                        // 45
+                                                                                                           // 46
+  if (parts.length - index === 1) {                                                                        // 47
+    return stripDotJS(parts[index]) === "regenerator";                                                     // 48
+  }                                                                                                        // 49
+                                                                                                           // 50
+  return false;                                                                                            // 51
+};                                                                                                         // 52
+                                                                                                           // 53
+function stripDotJS(name) {                                                                                // 54
+  return name.replace(/\.js$/, "");                                                                        // 55
+}                                                                                                          // 56
+                                                                                                           // 57
+var BabelRuntime = {                                                                                       // 58
+  // es6.templateLiterals                                                                                  // 59
+  // Constructs the object passed to the tag function in a tagged                                          // 60
+  // template literal.                                                                                     // 61
+  taggedTemplateLiteralLoose: function (strings, raw) {                                                    // 62
+    // Babel's own version of this calls Object.freeze on `strings` and                                    // 63
+    // `strings.raw`, but it doesn't seem worth the compatibility and                                      // 64
+    // performance concerns.  If you're writing code against this helper,                                  // 65
+    // don't add properties to these objects.                                                              // 66
+    strings.raw = raw;                                                                                     // 67
+    return strings;                                                                                        // 68
+  },                                                                                                       // 69
+                                                                                                           // 70
+  // es6.classes                                                                                           // 71
+  // Checks that a class constructor is being called with `new`, and throws                                // 72
+  // an error if it is not.                                                                                // 73
+  classCallCheck: function (instance, Constructor) {                                                       // 74
+    if (!(instance instanceof Constructor)) {                                                              // 75
+      throw new TypeError("Cannot call a class as a function");                                            // 76
+    }                                                                                                      // 77
+  },                                                                                                       // 78
+                                                                                                           // 79
+  // es6.classes                                                                                           // 80
+  inherits: function (subClass, superClass) {                                                              // 81
+    if (typeof superClass !== "function" && superClass !== null) {                                         // 82
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }                                                                                                      // 84
+                                                                                                           // 85
+    if (superClass) {                                                                                      // 86
+      if (Object.create) {                                                                                 // 87
+        // All but IE 8                                                                                    // 88
+        subClass.prototype = Object.create(superClass.prototype, {                                         // 89
+          constructor: {                                                                                   // 90
+            value: subClass,                                                                               // 91
+            enumerable: false,                                                                             // 92
+            writable: true,                                                                                // 93
+            configurable: true                                                                             // 94
+          }                                                                                                // 95
+        });                                                                                                // 96
+      } else {                                                                                             // 97
+        // IE 8 path.  Slightly worse for modern browsers, because `constructor`                           // 98
+        // is enumerable and shows up in the inspector unnecessarily.                                      // 99
+        // It's not an "own" property of any instance though.                                              // 100
+        //                                                                                                 // 101
+        // For correctness when writing code,                                                              // 102
+        // don't enumerate all the own-and-inherited properties of an instance                             // 103
+        // of a class and expect not to find `constructor` (but who does that?).                           // 104
+        var F = function () {                                                                              // 105
+          this.constructor = subClass;                                                                     // 106
+        };                                                                                                 // 107
+        F.prototype = superClass.prototype;                                                                // 108
+        subClass.prototype = new F();                                                                      // 109
+      }                                                                                                    // 110
+                                                                                                           // 111
+      // For modern browsers, this would be `subClass.__proto__ = superClass`,                             // 112
+      // but IE <=10 don't support `__proto__`, and in this case the difference                            // 113
+      // would be detectable; code that works in modern browsers could easily                              // 114
+      // fail on IE 8 if we ever used the `__proto__` trick.                                               // 115
+      //                                                                                                   // 116
+      // There's no perfect way to make static methods inherited if they are                               // 117
+      // assigned after declaration of the classes.  The best we can do is                                 // 118
+      // to copy them.  In other words, when you write `class Foo                                          // 119
+      // extends Bar`, we copy the static methods from Bar onto Foo, but future                            // 120
+      // ones are not copied.                                                                              // 121
+      //                                                                                                   // 122
+      // For correctness when writing code, don't add static methods to a class                            // 123
+      // after you subclass it.                                                                            // 124
+                                                                                                           // 125
+      // The ecmascript-runtime package provides adequate polyfills for                                    // 126
+      // all of these Object.* functions (and Array#forEach), and anyone                                   // 127
+      // using babel-runtime is almost certainly using it because of the                                   // 128
+      // ecmascript package, which also implies ecmascript-runtime.                                        // 129
+      Object.getOwnPropertyNames(superClass).forEach(function (k) {                                        // 130
+        // This property descriptor dance preserves getter/setter behavior                                 // 131
+        // in browsers that support accessor properties (all except                                        // 132
+        // IE8). In IE8, the superClass can't have accessor properties                                     // 133
+        // anyway, so this code is still safe.                                                             // 134
+        var descriptor = Object.getOwnPropertyDescriptor(superClass, k);                                   // 135
+        if (descriptor && typeof descriptor === "object") {                                                // 136
+          if (Object.getOwnPropertyDescriptor(subClass, k)) {                                              // 137
+            // If subClass already has a property by this name, then it                                    // 138
+            // would not be inherited, so it should not be copied. This                                    // 139
+            // notably excludes properties like .prototype and .name.                                      // 140
+            return;                                                                                        // 141
+          }                                                                                                // 142
+                                                                                                           // 143
+          Object.defineProperty(subClass, k, descriptor);                                                  // 144
+        }                                                                                                  // 145
+      });                                                                                                  // 146
+    }                                                                                                      // 147
+  },                                                                                                       // 148
+                                                                                                           // 149
+  defineProperty: function (obj, key, value) {                                                             // 150
+    if (hasDefineProperty && (key in obj)) {                                                               // 151
+      Object.defineProperty(obj, key, {                                                                    // 152
+        value: value,                                                                                      // 153
+        enumerable: true,                                                                                  // 154
+        configurable: true,                                                                                // 155
+        writable: true                                                                                     // 156
+      });                                                                                                  // 157
+    } else {                                                                                               // 158
+      obj[key] = value;                                                                                    // 159
+    }                                                                                                      // 160
+                                                                                                           // 161
+    return obj;                                                                                            // 162
+  },                                                                                                       // 163
+                                                                                                           // 164
+  createClass: function (Constructor, protoProps, staticProps) {                                           // 165
+    if (! hasDefineProperty) {                                                                             // 166
+      // e.g. `class Foo { get bar() {} }`.  If you try to use getters and                                 // 167
+      // setters in IE 8, you will get a big nasty error, with or without                                  // 168
+      // Babel.  I don't know of any other syntax features besides getters                                 // 169
+      // and setters that will trigger this error.                                                         // 170
+      throw new Error(                                                                                     // 171
+        "Your browser does not support this type of class property.  " +                                   // 172
+          "For example, Internet Explorer 8 does not support getters and " +                               // 173
+          "setters.");                                                                                     // 174
+    }                                                                                                      // 175
+                                                                                                           // 176
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);                                   // 177
+    if (staticProps) defineProperties(Constructor, staticProps);                                           // 178
+    return Constructor;                                                                                    // 179
+  },                                                                                                       // 180
+                                                                                                           // 181
+  "typeof": function (obj) {                                                                               // 182
+    return obj && obj.constructor === Symbol ? "symbol" : typeof obj;                                      // 183
   },                                                                                                       // 184
                                                                                                            // 185
-  defaults: function (obj, defaults) {                                                                     // 186
-    Object.getOwnPropertyNames(defaults).forEach(function (key) {                                          // 187
-      var desc = Object.getOwnPropertyDescriptor(defaults, key);                                           // 188
-      if (desc && desc.configurable && typeof obj[key] === "undefined") {                                  // 189
-        Object.defineProperty(obj, key, desc);                                                             // 190
-      }                                                                                                    // 191
-    });                                                                                                    // 192
-                                                                                                           // 193
-    return obj;                                                                                            // 194
-  },                                                                                                       // 195
-                                                                                                           // 196
-  // es7.objectRestSpread and react (JSX)                                                                  // 197
-  "extends": Object.assign || (function (target) {                                                         // 198
-    for (var i = 1; i < arguments.length; i++) {                                                           // 199
-      var source = arguments[i];                                                                           // 200
-      for (var key in source) {                                                                            // 201
-        if (hasOwn.call(source, key)) {                                                                    // 202
-          target[key] = source[key];                                                                       // 203
-        }                                                                                                  // 204
-      }                                                                                                    // 205
-    }                                                                                                      // 206
-    return target;                                                                                         // 207
-  }),                                                                                                      // 208
-                                                                                                           // 209
-  // es6.destructuring                                                                                     // 210
-  objectWithoutProperties: function (obj, keys) {                                                          // 211
-    var target = {};                                                                                       // 212
-    outer: for (var i in obj) {                                                                            // 213
-      if (! hasOwn.call(obj, i)) continue;                                                                 // 214
-      for (var j = 0; j < keys.length; j++) {                                                              // 215
-        if (keys[j] === i) continue outer;                                                                 // 216
-      }                                                                                                    // 217
-      target[i] = obj[i];                                                                                  // 218
-    }                                                                                                      // 219
-    return target;                                                                                         // 220
-  },                                                                                                       // 221
-                                                                                                           // 222
-  // es6.destructuring                                                                                     // 223
-  objectDestructuringEmpty: function (obj) {                                                               // 224
-    if (obj == null) throw new TypeError("Cannot destructure undefined");                                  // 225
-  },                                                                                                       // 226
-                                                                                                           // 227
-  // es6.spread                                                                                            // 228
-  bind: Function.prototype.bind || (function () {                                                          // 229
-    var isCallable = function (value) { return typeof value === 'function'; };                             // 230
-    var $Object = Object;                                                                                  // 231
-    var to_string = Object.prototype.toString;                                                             // 232
-    var array_slice = Array.prototype.slice;                                                               // 233
-    var array_concat = Array.prototype.concat;                                                             // 234
-    var array_push = Array.prototype.push;                                                                 // 235
-    var max = Math.max;                                                                                    // 236
-    var Empty = function Empty() {};                                                                       // 237
-                                                                                                           // 238
-    // Copied from es5-shim.js (3ac7942).  See original for more comments.                                 // 239
-    return function bind(that) {                                                                           // 240
-      var target = this;                                                                                   // 241
-      if (!isCallable(target)) {                                                                           // 242
-        throw new TypeError('Function.prototype.bind called on incompatible ' + target);                   // 243
-      }                                                                                                    // 244
-                                                                                                           // 245
-      var args = array_slice.call(arguments, 1);                                                           // 246
-                                                                                                           // 247
-      var bound;                                                                                           // 248
-      var binder = function () {                                                                           // 249
-                                                                                                           // 250
-        if (this instanceof bound) {                                                                       // 251
-          var result = target.apply(                                                                       // 252
-            this,                                                                                          // 253
-            array_concat.call(args, array_slice.call(arguments))                                           // 254
-          );                                                                                               // 255
-          if ($Object(result) === result) {                                                                // 256
-            return result;                                                                                 // 257
-          }                                                                                                // 258
-          return this;                                                                                     // 259
-        } else {                                                                                           // 260
-          return target.apply(                                                                             // 261
-            that,                                                                                          // 262
-            array_concat.call(args, array_slice.call(arguments))                                           // 263
-          );                                                                                               // 264
-        }                                                                                                  // 265
-      };                                                                                                   // 266
-                                                                                                           // 267
-      var boundLength = max(0, target.length - args.length);                                               // 268
-                                                                                                           // 269
-      var boundArgs = [];                                                                                  // 270
-      for (var i = 0; i < boundLength; i++) {                                                              // 271
-        array_push.call(boundArgs, '$' + i);                                                               // 272
-      }                                                                                                    // 273
-                                                                                                           // 274
-      // Create a Function from source code so that it has the right `.length`.                            // 275
-      // Probably not important for Babel.  This code violates CSPs that ban                               // 276
-      // `eval`, but the browsers that need this polyfill don't have CSP!                                  // 277
-      bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this, arguments); }')(binder);
-                                                                                                           // 279
-      if (target.prototype) {                                                                              // 280
-        Empty.prototype = target.prototype;                                                                // 281
-        bound.prototype = new Empty();                                                                     // 282
-        Empty.prototype = null;                                                                            // 283
-      }                                                                                                    // 284
-                                                                                                           // 285
-      return bound;                                                                                        // 286
-    };                                                                                                     // 287
-                                                                                                           // 288
-  })(),                                                                                                    // 289
-                                                                                                           // 290
-  toConsumableArray: function (arr) {                                                                      // 291
-    if (Array.isArray(arr)) {                                                                              // 292
-      for (var i = arr.length - 1, arr2 = Array(i + 1); i >= 0; --i) {                                     // 293
-        arr2[i] = arr[i];                                                                                  // 294
-      }                                                                                                    // 295
+  possibleConstructorReturn: function (self, call) {                                                       // 186
+    if (! self) {                                                                                          // 187
+      throw new ReferenceError(                                                                            // 188
+        "this hasn't been initialised - super() hasn't been called"                                        // 189
+      );                                                                                                   // 190
+    }                                                                                                      // 191
+                                                                                                           // 192
+    var callType = typeof call;                                                                            // 193
+    if (call &&                                                                                            // 194
+        callType === "function" ||                                                                         // 195
+        callType === "object") {                                                                           // 196
+      return call;                                                                                         // 197
+    }                                                                                                      // 198
+                                                                                                           // 199
+    return self;                                                                                           // 200
+  },                                                                                                       // 201
+                                                                                                           // 202
+  interopRequireDefault: function (obj) {                                                                  // 203
+    return obj && obj.__esModule ? obj : { 'default': obj };                                               // 204
+  },                                                                                                       // 205
+                                                                                                           // 206
+  interopRequireWildcard: function (obj) {                                                                 // 207
+    if (obj && obj.__esModule) {                                                                           // 208
+      return obj;                                                                                          // 209
+    }                                                                                                      // 210
+                                                                                                           // 211
+    var newObj = {};                                                                                       // 212
+                                                                                                           // 213
+    if (obj != null) {                                                                                     // 214
+      for (var key in obj) {                                                                               // 215
+        if (hasOwn.call(obj, key)) {                                                                       // 216
+          newObj[key] = obj[key];                                                                          // 217
+        }                                                                                                  // 218
+      }                                                                                                    // 219
+    }                                                                                                      // 220
+                                                                                                           // 221
+    newObj["default"] = obj;                                                                               // 222
+    return newObj;                                                                                         // 223
+  },                                                                                                       // 224
+                                                                                                           // 225
+  interopExportWildcard: function (obj, defaults) {                                                        // 226
+    var newObj = defaults({}, obj);                                                                        // 227
+    delete newObj["default"];                                                                              // 228
+    return newObj;                                                                                         // 229
+  },                                                                                                       // 230
+                                                                                                           // 231
+  defaults: function (obj, defaults) {                                                                     // 232
+    Object.getOwnPropertyNames(defaults).forEach(function (key) {                                          // 233
+      var desc = Object.getOwnPropertyDescriptor(defaults, key);                                           // 234
+      if (desc && desc.configurable && typeof obj[key] === "undefined") {                                  // 235
+        Object.defineProperty(obj, key, desc);                                                             // 236
+      }                                                                                                    // 237
+    });                                                                                                    // 238
+                                                                                                           // 239
+    return obj;                                                                                            // 240
+  },                                                                                                       // 241
+                                                                                                           // 242
+  // es7.objectRestSpread and react (JSX)                                                                  // 243
+  "extends": Object.assign || (function (target) {                                                         // 244
+    for (var i = 1; i < arguments.length; i++) {                                                           // 245
+      var source = arguments[i];                                                                           // 246
+      for (var key in source) {                                                                            // 247
+        if (hasOwn.call(source, key)) {                                                                    // 248
+          target[key] = source[key];                                                                       // 249
+        }                                                                                                  // 250
+      }                                                                                                    // 251
+    }                                                                                                      // 252
+    return target;                                                                                         // 253
+  }),                                                                                                      // 254
+                                                                                                           // 255
+  // es6.destructuring                                                                                     // 256
+  objectWithoutProperties: function (obj, keys) {                                                          // 257
+    var target = {};                                                                                       // 258
+    outer: for (var i in obj) {                                                                            // 259
+      if (! hasOwn.call(obj, i)) continue;                                                                 // 260
+      for (var j = 0; j < keys.length; j++) {                                                              // 261
+        if (keys[j] === i) continue outer;                                                                 // 262
+      }                                                                                                    // 263
+      target[i] = obj[i];                                                                                  // 264
+    }                                                                                                      // 265
+    return target;                                                                                         // 266
+  },                                                                                                       // 267
+                                                                                                           // 268
+  // es6.destructuring                                                                                     // 269
+  objectDestructuringEmpty: function (obj) {                                                               // 270
+    if (obj == null) throw new TypeError("Cannot destructure undefined");                                  // 271
+  },                                                                                                       // 272
+                                                                                                           // 273
+  // es6.spread                                                                                            // 274
+  bind: Function.prototype.bind || (function () {                                                          // 275
+    var isCallable = function (value) { return typeof value === 'function'; };                             // 276
+    var $Object = Object;                                                                                  // 277
+    var to_string = Object.prototype.toString;                                                             // 278
+    var array_slice = Array.prototype.slice;                                                               // 279
+    var array_concat = Array.prototype.concat;                                                             // 280
+    var array_push = Array.prototype.push;                                                                 // 281
+    var max = Math.max;                                                                                    // 282
+    var Empty = function Empty() {};                                                                       // 283
+                                                                                                           // 284
+    // Copied from es5-shim.js (3ac7942).  See original for more comments.                                 // 285
+    return function bind(that) {                                                                           // 286
+      var target = this;                                                                                   // 287
+      if (!isCallable(target)) {                                                                           // 288
+        throw new TypeError('Function.prototype.bind called on incompatible ' + target);                   // 289
+      }                                                                                                    // 290
+                                                                                                           // 291
+      var args = array_slice.call(arguments, 1);                                                           // 292
+                                                                                                           // 293
+      var bound;                                                                                           // 294
+      var binder = function () {                                                                           // 295
                                                                                                            // 296
-      return arr2;                                                                                         // 297
-    }                                                                                                      // 298
-                                                                                                           // 299
-    return Array.from(arr);                                                                                // 300
-  },                                                                                                       // 301
-                                                                                                           // 302
-  toArray: function (arr) {                                                                                // 303
-    return Array.isArray(arr) ? arr : Array.from(arr);                                                     // 304
-  },                                                                                                       // 305
-                                                                                                           // 306
-  slicedToArray: function (iterable, limit) {                                                              // 307
-    if (Array.isArray(iterable)) {                                                                         // 308
-      return iterable;                                                                                     // 309
-    }                                                                                                      // 310
-                                                                                                           // 311
-    if (iterable) {                                                                                        // 312
-      var it = iterable[iteratorSymbol]();                                                                 // 313
-      var result = [];                                                                                     // 314
-      var info;                                                                                            // 315
-                                                                                                           // 316
-      if (typeof limit !== "number") {                                                                     // 317
-        limit = Infinity;                                                                                  // 318
+        if (this instanceof bound) {                                                                       // 297
+          var result = target.apply(                                                                       // 298
+            this,                                                                                          // 299
+            array_concat.call(args, array_slice.call(arguments))                                           // 300
+          );                                                                                               // 301
+          if ($Object(result) === result) {                                                                // 302
+            return result;                                                                                 // 303
+          }                                                                                                // 304
+          return this;                                                                                     // 305
+        } else {                                                                                           // 306
+          return target.apply(                                                                             // 307
+            that,                                                                                          // 308
+            array_concat.call(args, array_slice.call(arguments))                                           // 309
+          );                                                                                               // 310
+        }                                                                                                  // 311
+      };                                                                                                   // 312
+                                                                                                           // 313
+      var boundLength = max(0, target.length - args.length);                                               // 314
+                                                                                                           // 315
+      var boundArgs = [];                                                                                  // 316
+      for (var i = 0; i < boundLength; i++) {                                                              // 317
+        array_push.call(boundArgs, '$' + i);                                                               // 318
       }                                                                                                    // 319
                                                                                                            // 320
-      while (result.length < limit &&                                                                      // 321
-             ! (info = it.next()).done) {                                                                  // 322
-        result.push(info.value);                                                                           // 323
-      }                                                                                                    // 324
+      // Create a Function from source code so that it has the right `.length`.                            // 321
+      // Probably not important for Babel.  This code violates CSPs that ban                               // 322
+      // `eval`, but the browsers that need this polyfill don't have CSP!                                  // 323
+      bound = Function('binder', 'return function (' + boundArgs.join(',') + '){ return binder.apply(this, arguments); }')(binder);
                                                                                                            // 325
-      return result;                                                                                       // 326
-    }                                                                                                      // 327
-                                                                                                           // 328
-    throw new TypeError(                                                                                   // 329
-      "Invalid attempt to destructure non-iterable instance"                                               // 330
-    );                                                                                                     // 331
-  },                                                                                                       // 332
-                                                                                                           // 333
-  slice: Array.prototype.slice                                                                             // 334
-};                                                                                                         // 335
+      if (target.prototype) {                                                                              // 326
+        Empty.prototype = target.prototype;                                                                // 327
+        bound.prototype = new Empty();                                                                     // 328
+        Empty.prototype = null;                                                                            // 329
+      }                                                                                                    // 330
+                                                                                                           // 331
+      return bound;                                                                                        // 332
+    };                                                                                                     // 333
+                                                                                                           // 334
+  })(),                                                                                                    // 335
                                                                                                            // 336
-// Use meteorInstall to install all of the above helper functions within                                   // 337
-// node_modules/babel-runtime/helpers.                                                                     // 338
-Object.keys(BabelRuntime).forEach(function (helperName) {                                                  // 339
-  var helpers = {};                                                                                        // 340
-                                                                                                           // 341
-  helpers[helperName + ".js"] = function (require, exports, module) {                                      // 342
-    module.exports = BabelRuntime[helperName];                                                             // 343
-  };                                                                                                       // 344
+  toConsumableArray: function (arr) {                                                                      // 337
+    if (Array.isArray(arr)) {                                                                              // 338
+      for (var i = arr.length - 1, arr2 = Array(i + 1); i >= 0; --i) {                                     // 339
+        arr2[i] = arr[i];                                                                                  // 340
+      }                                                                                                    // 341
+                                                                                                           // 342
+      return arr2;                                                                                         // 343
+    }                                                                                                      // 344
                                                                                                            // 345
-  meteorInstall({                                                                                          // 346
-    node_modules: {                                                                                        // 347
-      "babel-runtime": {                                                                                   // 348
-        helpers: helpers                                                                                   // 349
-      }                                                                                                    // 350
-    }                                                                                                      // 351
-  });                                                                                                      // 352
-});                                                                                                        // 353
-                                                                                                           // 354
-// Use meteorInstall to install the regenerator runtime at                                                 // 355
-// node_modules/babel-runtime/regenerator.                                                                 // 356
-meteorInstall({                                                                                            // 357
-  node_modules: {                                                                                          // 358
-    "babel-runtime": {                                                                                     // 359
-      "regenerator.js": function (r, e, module) {                                                          // 360
-        // Note that we use the require function provided to the                                           // 361
-        // babel-runtime.js file, not the one named 'r' above.                                             // 362
-        var runtime = require("regenerator-runtime");                                                      // 363
-                                                                                                           // 364
-        // If Promise.asyncApply is defined, use it to wrap calls to                                       // 365
-        // runtime.async so that the entire async function will run in its                                 // 366
-        // own Fiber, not just the code that comes after the first await.                                  // 367
-        if (typeof Promise === "function" &&                                                               // 368
-            typeof Promise.asyncApply === "function") {                                                    // 369
-          var realAsync = runtime.async;                                                                   // 370
-          runtime.async = function () {                                                                    // 371
-            return Promise.asyncApply(realAsync, runtime, arguments);                                      // 372
-          };                                                                                               // 373
-        }                                                                                                  // 374
-                                                                                                           // 375
-        module.exports = runtime;                                                                          // 376
-      }                                                                                                    // 377
-    }                                                                                                      // 378
-  }                                                                                                        // 379
-});                                                                                                        // 380
-                                                                                                           // 381
+    return Array.from(arr);                                                                                // 346
+  },                                                                                                       // 347
+                                                                                                           // 348
+  toArray: function (arr) {                                                                                // 349
+    return Array.isArray(arr) ? arr : Array.from(arr);                                                     // 350
+  },                                                                                                       // 351
+                                                                                                           // 352
+  slicedToArray: function (iterable, limit) {                                                              // 353
+    if (Array.isArray(iterable)) {                                                                         // 354
+      return iterable;                                                                                     // 355
+    }                                                                                                      // 356
+                                                                                                           // 357
+    if (iterable) {                                                                                        // 358
+      var it = iterable[iteratorSymbol]();                                                                 // 359
+      var result = [];                                                                                     // 360
+      var info;                                                                                            // 361
+                                                                                                           // 362
+      if (typeof limit !== "number") {                                                                     // 363
+        limit = Infinity;                                                                                  // 364
+      }                                                                                                    // 365
+                                                                                                           // 366
+      while (result.length < limit &&                                                                      // 367
+             ! (info = it.next()).done) {                                                                  // 368
+        result.push(info.value);                                                                           // 369
+      }                                                                                                    // 370
+                                                                                                           // 371
+      return result;                                                                                       // 372
+    }                                                                                                      // 373
+                                                                                                           // 374
+    throw new TypeError(                                                                                   // 375
+      "Invalid attempt to destructure non-iterable instance"                                               // 376
+    );                                                                                                     // 377
+  },                                                                                                       // 378
+                                                                                                           // 379
+  slice: Array.prototype.slice                                                                             // 380
+};                                                                                                         // 381
+                                                                                                           // 382
+// Use meteorInstall to install all of the above helper functions within                                   // 383
+// node_modules/babel-runtime/helpers.                                                                     // 384
+Object.keys(BabelRuntime).forEach(function (helperName) {                                                  // 385
+  var helpers = {};                                                                                        // 386
+                                                                                                           // 387
+  helpers[helperName + ".js"] = function (require, exports, module) {                                      // 388
+    module.exports = BabelRuntime[helperName];                                                             // 389
+  };                                                                                                       // 390
+                                                                                                           // 391
+  meteorInstall({                                                                                          // 392
+    node_modules: {                                                                                        // 393
+      "babel-runtime": {                                                                                   // 394
+        helpers: helpers                                                                                   // 395
+      }                                                                                                    // 396
+    }                                                                                                      // 397
+  });                                                                                                      // 398
+});                                                                                                        // 399
+                                                                                                           // 400
+// Use meteorInstall to install the regenerator runtime at                                                 // 401
+// node_modules/babel-runtime/regenerator.                                                                 // 402
+meteorInstall({                                                                                            // 403
+  node_modules: {                                                                                          // 404
+    "babel-runtime": {                                                                                     // 405
+      "regenerator.js": function (r, e, module) {                                                          // 406
+        // Note that we use the require function provided to the                                           // 407
+        // babel-runtime.js file, not the one named 'r' above.                                             // 408
+        var runtime = require("regenerator-runtime");                                                      // 409
+                                                                                                           // 410
+        // If Promise.asyncApply is defined, use it to wrap calls to                                       // 411
+        // runtime.async so that the entire async function will run in its                                 // 412
+        // own Fiber, not just the code that comes after the first await.                                  // 413
+        if (typeof Promise === "function" &&                                                               // 414
+            typeof Promise.asyncApply === "function") {                                                    // 415
+          var realAsync = runtime.async;                                                                   // 416
+          runtime.async = function () {                                                                    // 417
+            return Promise.asyncApply(realAsync, runtime, arguments);                                      // 418
+          };                                                                                               // 419
+        }                                                                                                  // 420
+                                                                                                           // 421
+        module.exports = runtime;                                                                          // 422
+      }                                                                                                    // 423
+    }                                                                                                      // 424
+  }                                                                                                        // 425
+});                                                                                                        // 426
+                                                                                                           // 427
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }],"node_modules":{"meteor-babel-helpers":{"package.json":function(require,exports){
@@ -1227,14 +1273,14 @@ if (hadRuntime) {                                                               
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 }}}}}}},{"extensions":[".js",".json"]});
-require("./node_modules/meteor/babel-runtime/babel-runtime.js");
+var exports = require("./node_modules/meteor/babel-runtime/babel-runtime.js");
 
 /* Exports */
 if (typeof Package === 'undefined') Package = {};
 (function (pkg, symbols) {
   for (var s in symbols)
     (s in pkg) || (pkg[s] = symbols[s]);
-})(Package['babel-runtime'] = {}, {
+})(Package['babel-runtime'] = exports, {
   meteorBabelHelpers: meteorBabelHelpers
 });
 
