@@ -33,7 +33,9 @@ and all the individual depedencies.
 
 `npm install --save meteor-client-packages-meteor@1.4.1-3.0.7` for Meteor 1.4.1.3
 
-`npm install --save meteor-client-packages-meteor@1.4.2-0.0.7` for Meteor 1.4.1.3
+`npm install --save meteor-client-packages-meteor@1.4.2-0.0.7` for Meteor 1.4.2
+
+`npm install --save meteor-client-packages-meteor@1.4.2-1.0.7` for Meteor 1.4.2.1
 
 ### Usage
 
@@ -95,6 +97,7 @@ meteor-client-packages-meteor version : 1.4.1-1.x.x  <==  Meteor version : 1.4.1
 meteor-client-packages-meteor version : 1.4.1-2.x.x  <==  Meteor version : 1.4.1.2
 meteor-client-packages-meteor version : 1.4.1-2.x.x  <==  Meteor version : 1.4.1.3
 meteor-client-packages-meteor version : 1.4.2-0.x.x  <==  Meteor version : 1.4.2
+meteor-client-packages-meteor version : 1.4.2-1.x.x  <==  Meteor version : 1.4.2.1
 ```
 
 #### 4. Your own NPM package for other METEOR packages
